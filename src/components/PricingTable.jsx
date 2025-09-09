@@ -119,7 +119,7 @@ const PricingTable = () => {
         <table className="w-full min-w-[680px] sm:min-w-[900px] md:min-w-[1000px] text-sm text-left">
           <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
             <tr>
-              <th scope="col" className="px-6 py-3 sticky left-0 z-20 bg-gray-800 w-40 sm:w-56">Country</th>
+              <th scope="col" className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-40 sm:w-56">Country</th>
               <th scope="col" className="px-6 py-3 w-24 sm:w-28">Currency</th>
               {plans.map(plan => (
                 <th
@@ -136,7 +136,7 @@ const PricingTable = () => {
           <tbody>
             {sortedData.map((data, index) => (
               <tr key={index} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
-                <td className="px-6 py-4 font-medium text-white sticky left-0 z-10 bg-gray-800 group-hover:bg-gray-700/50 border-r border-gray-700 w-40 sm:w-56 max-w-[10rem] sm:max-w-[14rem]">
+                <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-40 sm:w-56 max-w-[10rem] sm:max-w-[14rem]">
                   <div className="flex items-center gap-2 truncate">{data.country}</div>
                 </td>
                 <td className="px-6 py-4 text-gray-400 w-24 sm:w-28">{data.currency}</td>
