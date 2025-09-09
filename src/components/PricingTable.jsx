@@ -63,7 +63,11 @@ const PricingTable = () => {
   const CellContent = ({ planData, isMin }) => {
     if (!planData) return <span className="text-gray-500">-</span>;
     return (
-      <div className={`flex flex-col ${isMin ? 'bg-green-900/20 rounded-md px-2 py-1' : ''}` }>
+      <div className={`flex flex-col ${
+        isMin
+          ? 'bg-green-600/25 ring-2 ring-green-400/50 rounded-md px-2 py-1'
+          : ''
+      }` }>
         <span className="font-medium text-white">{planData.price}</span>
         {planData.best && (
           <span className="text-xs bg-green-500 text-white rounded-full px-2 py-0.5 mt-1 self-start">
