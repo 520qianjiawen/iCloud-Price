@@ -5,14 +5,30 @@ const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
 
 const PricingTable = () => {
   const [activePlan, setActivePlan] = useState('50GB');
+  const [sortDirection, setSortDirection] = useState('ascending'); // 'ascending' | 'descending'
 
   const sortedData = useMemo(() => {
     return [...pricingData].sort((a, b) => {
       const priceA = a.plans[activePlan]?.cny ?? Infinity;
       const priceB = b.plans[activePlan]?.cny ?? Infinity;
-      return priceA - priceB;
+      const diff = Number(priceA) - Number(priceB);
+      return sortDirection === 'ascending' ? diff : -diff;
     });
-  }, [activePlan]);
+  }, [activePlan, sortDirection]);
+
+  const requestSort = (plan) => {
+    if (plan === activePlan) {
+      setSortDirection((prev) => (prev === 'ascending' ? 'descending' : 'ascending'));
+    } else {
+      setActivePlan(plan);
+      setSortDirection('ascending');
+    }
+  };
+
+  const getSortIndicator = (plan) => {
+    if (plan !== activePlan) return '↕️';
+    return sortDirection === 'ascending' ? '🔼' : '🔽';
+  };
 
   const CellContent = ({ planData }) => {
     if (!planData) return <span className="text-gray-500">-</span>;
@@ -47,15 +63,16 @@ const PricingTable = () => {
             {plans.map((plan) => (
               <button
                 key={plan}
-                onClick={() => setActivePlan(plan)}
+                onClick={() => requestSort(plan)}
                 aria-pressed={activePlan === plan}
-                className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${
+                className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 inline-flex items-center gap-2 ${
                   activePlan === plan
                     ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 }`}
               >
-                {plan}
+                <span>{plan}</span>
+                <span className="leading-none">{getSortIndicator(plan)}</span>
               </button>
             ))}
           </div>
