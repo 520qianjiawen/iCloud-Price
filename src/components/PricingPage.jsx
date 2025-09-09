@@ -1,4 +1,3 @@
-```javascript
 import React, { useState, useMemo } from 'react';
 import { pricingData } from '../data/pricingData';
 
@@ -47,11 +46,11 @@ const PricingPage = () => {
     <div className="container mx-auto px-4 py-8 md:py-12">
       <header className="text-center mb-10">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 animate-fade-in-up">
-          iCloud+ Global Pricing Comparison
+          iCloud+ 全球定价比较
         </h1>
-        <p className="text-lg text-gray-400 mb-4">Find the best iCloud+ deal worldwide</p>
+        <p className="text-lg text-gray-400 mb-4">找到全球最好的iCloud+ 价格</p>
         <div className="text-sm text-gray-500">
-          Data updated daily from <a href="https://support.apple.com/en-us/108047" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Apple</a> • Developed by <a href="https://github.com/missuo" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Vincent</a>
+          来自<a href="https://support.apple.com/en-us/108047" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">苹果</a>的每日更新数据 • 由<a href="https://neutemu.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Neutemu</a>开发
         </div>
       </header>
 
@@ -59,9 +58,9 @@ const PricingPage = () => {
         <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors">
           Share as Image
         </button>
-        <a href="https://github.com/sponsors/missuo?o=esb" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-lg hover:bg-pink-500 transition-colors">
+        <button className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-lg hover:bg-pink-500 transition-colors">
           Sponsor
-        </a>
+        </button>
       </div>
 
       <div className="bg-gray-800 p-2 rounded-lg shadow-lg mb-8">
@@ -71,13 +70,16 @@ const PricingPage = () => {
             <button
               key={plan}
               onClick={() => requestSort(plan)}
-              className={`px-3 py-1.5 text-sm font-semibold rounded-md transition-all duration-200 \${
+              className={`px-3 py-1.5 text-sm font-semibold rounded-md transition-all duration-200 ${
                 activePlan === plan
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
-              {plan}
+              <span>{plan}</span>
+              <span className="ml-2 inline-block align-middle">
+                {getSortIndicator(plan)}
+              </span>
             </button>
           ))}
         </div>
@@ -102,7 +104,7 @@ const PricingPage = () => {
                 <td className="px-6 py-4 font-medium text-white">{countryData.country}</td>
                 <td className="px-6 py-4 text-gray-400">{countryData.currency}</td>
                 {countryData.plans.map((plan) => (
-                  <td key={plan.plan} className={`px-6 py-4 \${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
+                  <td key={plan.plan} className={`px-6 py-4 ${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
                     <div className="flex flex-col">
                       <span className="font-mono font-medium text-white">
                         {plan.price} {countryData.currency}
@@ -126,4 +128,3 @@ const PricingPage = () => {
 };
 
 export default PricingPage;
-```

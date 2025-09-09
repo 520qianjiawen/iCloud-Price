@@ -4,13 +4,13 @@ const Footer = () => {
   return (
     <footer className="text-center mt-12 py-4">
       <p className="text-sm text-gray-500">
-        This is a recreation of the original icloud.owo.nz website for educational purposes.
+        This is website for educational purposes.
       </p>
       <p className="text-sm text-gray-500 mt-1">
         Developed by{' '}
-        <a href="https://github.com/missuo" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-          Vincent
-        </a>. Recreated using React & Tailwind CSS.
+        <a href="https://neutemu.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+          Neutemu
+        </a>
       </p>
     </footer>
   );
