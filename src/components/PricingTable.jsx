@@ -82,7 +82,7 @@ const PricingTable = () => {
   return (
     <div className="w-full">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
            <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-sm transition-colors duration-200">
             Share as Image
           </button>
@@ -91,33 +91,35 @@ const PricingTable = () => {
             Sponsor
           </button>
         </div>
-        <div className="flex flex-col items-center sm:items-end">
-          <h6 className="text-sm font-semibold text-gray-400 mb-2">Sort Pricing By Plan:</h6>
-          <div className="flex flex-wrap justify-center sm:justify-end gap-2 bg-gray-800 p-1 rounded-lg">
-            {plans.map((plan) => (
-              <button
-                key={plan}
-                onClick={() => requestSort(plan)}
-                aria-pressed={activePlan === plan}
-                className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 inline-flex items-center gap-2 ${
-                  activePlan === plan
-                    ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                <span>{plan}</span>
-                <span className="leading-none">{getSortIndicator(plan)}</span>
-              </button>
-            ))}
+        <div className="flex flex-col items-stretch sm:items-end w-full">
+          <h6 className="text-sm font-semibold text-gray-400 mb-2 text-center sm:text-right">Sort Pricing By Plan:</h6>
+          <div className="bg-gray-800/80 p-1 rounded-xl overflow-x-auto no-scrollbar whitespace-nowrap snap-x snap-mandatory">
+            <div className="flex gap-2 min-w-max">
+              {plans.map((plan) => (
+                <button
+                  key={plan}
+                  onClick={() => requestSort(plan)}
+                  aria-pressed={activePlan === plan}
+                  className={`px-3 py-1 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 inline-flex items-center gap-2 snap-center min-w-[84px] sm:min-w-[96px] justify-center ${
+                    activePlan === plan
+                      ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  <span>{plan}</span>
+                  <span className="leading-none">{getSortIndicator(plan)}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       <div ref={scrollContainerRef} className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-        <table className="w-full min-w-[1000px] text-sm text-left">
+        <table className="w-full min-w-[680px] sm:min-w-[900px] md:min-w-[1000px] text-sm text-left">
           <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
             <tr>
-              <th scope="col" className="px-6 py-3 sticky left-0 z-20 bg-gray-700/50">Country</th>
+              <th scope="col" className="px-6 py-3 sticky left-0 z-20 bg-gray-800">Country</th>
               <th scope="col" className="px-6 py-3">Currency</th>
               {plans.map(plan => (
                 <th
