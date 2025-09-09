@@ -9,6 +9,20 @@ const PricingTable = () => {
   const scrollContainerRef = useRef(null);
   const headerRefs = useRef({}); // map of plan -> th element
 
+  // Precompute each列(plan)的最低价格(cny)
+  const minPriceByPlan = useMemo(() => {
+    const map = {};
+    plans.forEach((p) => {
+      let min = Infinity;
+      pricingData.forEach((row) => {
+        const v = row.plans[p]?.cny;
+        if (typeof v === 'number' && v < min) min = v;
+      });
+      map[p] = min;
+    });
+    return map;
+  }, []);
+
   const sortedData = useMemo(() => {
     return [...pricingData].sort((a, b) => {
       const priceA = a.plans[activePlan]?.cny ?? Infinity;
@@ -46,10 +60,10 @@ const PricingTable = () => {
     container.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
   }, [activePlan]);
 
-  const CellContent = ({ planData }) => {
+  const CellContent = ({ planData, isMin }) => {
     if (!planData) return <span className="text-gray-500">-</span>;
     return (
-      <div className="flex flex-col">
+      <div className={`flex flex-col ${isMin ? 'bg-green-900/20 rounded-md px-2 py-1' : ''}` }>
         <span className="font-medium text-white">{planData.price}</span>
         {planData.best && (
           <span className="text-xs bg-green-500 text-white rounded-full px-2 py-0.5 mt-1 self-start">
@@ -99,7 +113,7 @@ const PricingTable = () => {
         <table className="w-full min-w-[1000px] text-sm text-left">
           <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
             <tr>
-              <th scope="col" className="px-6 py-3">Country</th>
+              <th scope="col" className="px-6 py-3 sticky left-0 z-20 bg-gray-700/50">Country</th>
               <th scope="col" className="px-6 py-3">Currency</th>
               {plans.map(plan => (
                 <th
@@ -115,17 +129,21 @@ const PricingTable = () => {
           </thead>
           <tbody>
             {sortedData.map((data, index) => (
-              <tr key={index} className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
-                <td className="px-6 py-4 font-medium text-white whitespace-nowrap">{data.country}</td>
+              <tr key={index} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
+                <td className="px-6 py-4 font-medium text-white whitespace-nowrap sticky left-0 z-10 bg-gray-800 group-hover:bg-gray-700/50 border-r border-gray-700">{data.country}</td>
                 <td className="px-6 py-4 text-gray-400">{data.currency}</td>
-                {plans.map(plan => (
-                  <td
-                    key={plan}
-                    className={`px-6 py-4 text-right ${activePlan === plan ? 'bg-blue-900/20' : ''}`}
-                  >
-                    <CellContent planData={data.plans[plan]} />
-                  </td>
-                ))}
+                {plans.map(plan => {
+                  const planData = data.plans[plan];
+                  const isMin = planData && Number(planData.cny) === minPriceByPlan[plan];
+                  return (
+                    <td
+                      key={plan}
+                      className={`px-6 py-4 text-right ${activePlan === plan ? 'bg-blue-900/20' : ''}`}
+                    >
+                      <CellContent planData={planData} isMin={isMin} />
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
