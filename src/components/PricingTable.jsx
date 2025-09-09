@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { pricingData } from '../data/pricingData';
 
 const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
@@ -6,6 +6,8 @@ const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
 const PricingTable = () => {
   const [activePlan, setActivePlan] = useState('50GB');
   const [sortDirection, setSortDirection] = useState('ascending'); // 'ascending' | 'descending'
+  const scrollContainerRef = useRef(null);
+  const headerRefs = useRef({}); // map of plan -> th element
 
   const sortedData = useMemo(() => {
     return [...pricingData].sort((a, b) => {
@@ -29,6 +31,20 @@ const PricingTable = () => {
     if (plan !== activePlan) return '↕️';
     return sortDirection === 'ascending' ? '🔼' : '🔽';
   };
+
+  // Auto-scroll the table horizontally to keep active column visible/centered
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    const th = headerRefs.current[activePlan];
+    if (!container || !th) return;
+    const containerRect = container.getBoundingClientRect();
+    const thRect = th.getBoundingClientRect();
+    const current = container.scrollLeft;
+    // Calculate target so that the active column is centered in view
+    const delta = (thRect.left - containerRect.left) - (container.clientWidth / 2 - thRect.width / 2);
+    const target = current + delta;
+    container.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+  }, [activePlan]);
 
   const CellContent = ({ planData }) => {
     if (!planData) return <span className="text-gray-500">-</span>;
@@ -79,14 +95,21 @@ const PricingTable = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+      <div ref={scrollContainerRef} className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
         <table className="w-full min-w-[1000px] text-sm text-left">
           <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
             <tr>
               <th scope="col" className="px-6 py-3">Country</th>
               <th scope="col" className="px-6 py-3">Currency</th>
               {plans.map(plan => (
-                <th key={plan} scope="col" className="px-6 py-3 text-right">{plan}</th>
+                <th
+                  key={plan}
+                  ref={(el) => { if (el) headerRefs.current[plan] = el; }}
+                  scope="col"
+                  className="px-6 py-3 text-right"
+                >
+                  {plan}
+                </th>
               ))}
             </tr>
           </thead>
