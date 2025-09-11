@@ -1,6 +1,6 @@
 export const pricingData = [
   {
-    country: '🇳🇬 Nigeria',
+    country: '🇳🇬 尼日利亚',
     currency: 'NGN',
     plans: {
       '50GB': { price: '900 NGN', cny: 4.21, best: true },
@@ -11,7 +11,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇵🇰 Pakistan',
+    country: '🇵🇰 巴基斯坦',
     currency: 'PKR',
     plans: {
       '50GB': { price: '200 PKR', cny: 5.03, best: false },
@@ -22,7 +22,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇷🇺 Russia',
+    country: '🇷🇺 俄罗斯',
     currency: 'RUB',
     plans: {
       '50GB': { price: '59 RUB', cny: 5.18, best: false },
@@ -33,7 +33,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇰🇷 Republic of Korea',
+    country: '🇰🇷 韩国',
     currency: 'KRW',
     plans: {
       '50GB': { price: '1100 KRW', cny: 5.65, best: false },
@@ -44,7 +44,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇪🇬 Egypt',
+    country: '🇪🇬 埃及',
     currency: 'EGP',
     plans: {
       '50GB': { price: '39.99 EGP', cny: 5.88, best: false },
@@ -55,7 +55,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇳 China mainland',
+    country: '🇨🇳 中国大陆',
     currency: 'CNY',
     plans: {
       '50GB': { price: '6 CNY', cny: 6.00, best: false },
@@ -66,7 +66,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇮🇳 India',
+    country: '🇮🇳 印度',
     currency: 'INR',
     plans: {
       '50GB': { price: '75 INR', cny: 6.06, best: false },
@@ -77,7 +77,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇿🇦 South Africa',
+    country: '🇿🇦 南非',
     currency: 'ZAR',
     plans: {
       '50GB': { price: '14.99 ZAR', cny: 6.07, best: false },
@@ -88,7 +88,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇵🇭 Philippines',
+    country: '🇵🇭 菲律宾',
     currency: 'PHP',
     plans: {
       '50GB': { price: '49 PHP', cny: 6.16, best: false },
@@ -99,7 +99,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇲🇽 Mexico',
+    country: '🇲🇽 墨西哥',
     currency: 'MXN',
     plans: {
       '50GB': { price: '17 MXN', cny: 6.49, best: false },
@@ -110,7 +110,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇮🇩 Indonesia',
+    country: '🇮🇩 印度尼西亚',
     currency: 'IDR',
     plans: {
       '50GB': { price: '15000 IDR', cny: 6.52, best: false },
@@ -121,7 +121,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇲🇾 Malaysia',
+    country: '🇲🇾 马来西亚',
     currency: 'MYR',
     plans: {
       '50GB': { price: '3.90 MYR', cny: 6.59, best: false },
@@ -132,7 +132,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇰🇿 Kazakhstan',
+    country: '🇰🇿 哈萨克斯坦',
     currency: 'KZT',
     plans: {
       '50GB': { price: '499 KZT', cny: 6.63, best: false },
@@ -143,7 +143,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇦 Canada',
+    country: '🇨🇦 加拿大',
     currency: 'CAD',
     plans: {
       '50GB': { price: '1.29 CAD', cny: 6.65, best: false },
@@ -154,7 +154,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇹🇷 Türkiye',
+    country: '🇹🇷 土耳其',
     currency: 'TRY',
     plans: {
       '50GB': { price: '39.99 TRY', cny: 6.91, best: false },
@@ -165,7 +165,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇦🇺 Australia',
+    country: '🇦🇺 澳大利亚',
     currency: 'AUD',
     plans: {
       '50GB': { price: '1.49 AUD', cny: 6.96, best: false },
@@ -176,7 +176,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇴 Colombia',
+    country: '🇨🇴 哥伦比亚',
     currency: 'COP',
     plans: {
       '50GB': { price: '3900 COP', cny: 7.00, best: false },
@@ -187,7 +187,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇹🇼 Taiwan',
+    country: '🇹🇼 台湾',
     currency: 'TWD',
     plans: {
       '50GB': { price: '30 TWD', cny: 7.01, best: false },
@@ -198,7 +198,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇺🇸 United States',
+    country: '🇺🇸 美国',
     currency: 'USD',
     plans: {
       '50GB': { price: '0.99 USD', cny: 7.07, best: false },
@@ -209,7 +209,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇳🇿 New Zealand',
+    country: '🇳🇿 新西兰',
     currency: 'NZD',
     plans: {
       '50GB': { price: '1.69 NZD', cny: 7.10, best: false },
@@ -220,7 +220,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇹🇿 Tanzania',
+    country: '🇹🇿 坦桑尼亚',
     currency: 'TZS',
     plans: {
       '50GB': { price: '2500 TZS', cny: 7.13, best: false },
@@ -231,7 +231,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇯🇵 Japan',
+    country: '🇯🇵 日本',
     currency: 'JPY',
     plans: {
       '50GB': { price: '150 JPY', cny: 7.22, best: false },
@@ -242,7 +242,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇱 Chile',
+    country: '🇨🇱 智利',
     currency: 'CLP',
     plans: {
       '50GB': { price: '990 CLP', cny: 7.29, best: false },
@@ -253,7 +253,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇭🇰 Hong Kong',
+    country: '🇭🇰 香港',
     currency: 'HKD',
     plans: {
       '50GB': { price: '8 HKD', cny: 7.34, best: false },
@@ -264,7 +264,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇸🇦 Saudi Arabia',
+    country: '🇸🇦 沙特阿拉伯',
     currency: 'SAR',
     plans: {
       '50GB': { price: '3.99 SAR', cny: 7.59, best: false },
@@ -275,7 +275,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇦🇪 United Arab Emirates',
+    country: '🇦🇪 阿拉伯联合酋长国',
     currency: 'AED',
     plans: {
       '50GB': { price: '3.99 AED', cny: 7.75, best: false },
@@ -286,7 +286,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇧🇷 Brazil',
+    country: '🇧🇷 巴西',
     currency: 'BRL',
     plans: {
       '50GB': { price: '5.90 BRL', cny: 7.76, best: false },
@@ -297,7 +297,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇹🇭 Thailand',
+    country: '🇹🇭 泰国',
     currency: 'THB',
     plans: {
       '50GB': { price: '35 THB', cny: 7.78, best: false },
@@ -308,7 +308,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇵🇪 Peru',
+    country: '🇵🇪 秘鲁',
     currency: 'PEN',
     plans: {
       '50GB': { price: '3.90 PEN', cny: 7.91, best: false },
@@ -319,7 +319,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇷🇴 Romania',
+    country: '🇷🇴 罗马尼亚',
     currency: 'RON',
     plans: {
       '50GB': { price: '4.99 RON', cny: 8.21, best: false },
@@ -330,7 +330,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇸🇬 Singapore',
+    country: '🇸🇬 新加坡',
     currency: 'SGD',
     plans: {
       '50GB': { price: '1.48 SGD', cny: 8.22, best: false },
@@ -341,7 +341,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇪🇺 Euro',
+    country: '🇪🇺 欧元区',
     currency: 'EUR',
     plans: {
       '50GB': { price: '0.99 EUR', cny: 8.25, best: false },
@@ -352,7 +352,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇮🇱 Israel',
+    country: '🇮🇱 以色列',
     currency: 'ILS',
     plans: {
       '50GB': { price: '3.90 ILS', cny: 8.35, best: false },
@@ -363,7 +363,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇭🇺 Hungary',
+    country: '🇭🇺 匈牙利',
     currency: 'HUF',
     plans: {
       '50GB': { price: '399 HUF', cny: 8.48, best: false },
@@ -374,7 +374,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇳🇴 Norway',
+    country: '🇳🇴 挪威',
     currency: 'NOK',
     plans: {
       '50GB': { price: '12 NOK', cny: 8.51, best: false },
@@ -385,7 +385,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇿 Czechia',
+    country: '🇨🇿 捷克',
     currency: 'CZK',
     plans: {
       '50GB': { price: '25 CZK', cny: 8.56, best: false },
@@ -396,7 +396,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇨🇭 Switzerland',
+    country: '🇨🇭 瑞士',
     currency: 'CHF',
     plans: {
       '50GB': { price: '1 CHF', cny: 8.93, best: false },
@@ -407,7 +407,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇸🇪 Sweden',
+    country: '🇸🇪 瑞典',
     currency: 'SEK',
     plans: {
       '50GB': { price: '12 SEK', cny: 9.09, best: false },
@@ -418,7 +418,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇬🇧 United Kingdom',
+    country: '🇬🇧 英国',
     currency: 'GBP',
     plans: {
       '50GB': { price: '0.99 GBP', cny: 9.52, best: false },
@@ -429,7 +429,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇵🇱 Poland',
+    country: '🇵🇱 波兰',
     currency: 'PLN',
     plans: {
       '50GB': { price: '4.99 PLN', cny: 9.80, best: false },
@@ -440,7 +440,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇩🇰 Denmark',
+    country: '🇩🇰 丹麦',
     currency: 'DKK',
     plans: {
       '50GB': { price: '9 DKK', cny: 10.07, best: false },
@@ -456,7 +456,7 @@ export const pricingData = [
 // Data shape mirrors pricingData but nests by model -> storage for clarity
 export const iphone17PricingData = [
   {
-    country: '🇹🇼 Taiwan',
+    country: '🇹🇼 台湾',
     currency: 'TWD',
     models: {
       '17': {
@@ -482,7 +482,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇯🇵 Japan',
+    country: '🇯🇵 日本',
     currency: 'JPY',
     models: {
       '17': {
@@ -508,7 +508,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇯🇵 Japan (Tax-free)',
+    country: '🇯🇵 日本（免税）',
     currency: 'JPY',
     models: {
       '17': {
@@ -534,7 +534,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇰🇷 South Korea',
+    country: '🇰🇷 韩国',
     currency: 'KRW',
     models: {
       '17': {
@@ -560,7 +560,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇹🇭 Thailand',
+    country: '🇹🇭 泰国',
     currency: 'THB',
     models: {
       '17': {
@@ -586,7 +586,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇭🇰 Hong Kong',
+    country: '🇭🇰 香港',
     currency: 'HKD',
     models: {
       '17': {
@@ -612,7 +612,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇺🇸 United States',
+    country: '🇺🇸 美国',
     currency: 'USD',
     models: {
       '17': {
@@ -638,7 +638,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇨🇦 Canada',
+    country: '🇨🇦 加拿大',
     currency: 'CAD',
     models: {
       '17': {
@@ -664,7 +664,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇦🇺 Australia',
+    country: '🇦🇺 澳大利亚',
     currency: 'AUD',
     models: {
       '17': {
@@ -690,7 +690,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇸🇬 Singapore',
+    country: '🇸🇬 新加坡',
     currency: 'SGD',
     models: {
       '17': {
@@ -716,7 +716,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇨🇳 Mainland China',
+    country: '🇨🇳 中国大陆',
     currency: 'CNY',
     models: {
       '17': {
