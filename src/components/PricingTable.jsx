@@ -4,10 +4,13 @@ import { pricingData, iphone17PricingData } from '../data/pricingData';
 const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
 const iphoneModels = ['17', 'Air', '17 Pro', '17 Pro Max'];
 const iphoneStorages = ['256G', '512G', '1TB', '2TB'];
+const iphoneModelChips = ['17', '17 Air', '17 Pro', '17 Pro Max'];
+const displayToKey = { '17': '17', '17 Air': 'Air', '17 Pro': '17 Pro', '17 Pro Max': '17 Pro Max' };
 
 const PricingTable = () => {
   const [activePlan, setActivePlan] = useState('50GB');
   const [showIphone17, setShowIphone17] = useState(false);
+  const [activeModel, setActiveModel] = useState('17');
   const [sortDirection, setSortDirection] = useState('ascending'); // 'ascending' | 'descending'
   const scrollContainerRef = useRef(null);
   const headerRefs = useRef({}); // map of plan -> th element
@@ -99,26 +102,52 @@ const PricingTable = () => {
           </button>
         </div>
         <div className="flex flex-col items-stretch sm:items-end w-full">
-          <h6 className="text-sm font-semibold text-gray-400 mb-2 text-center sm:text-right">Sort Pricing By Plan:</h6>
-          <div className="bg-gray-800/80 p-1 rounded-xl overflow-x-auto no-scrollbar whitespace-nowrap snap-x snap-mandatory">
-            <div className="flex gap-2 min-w-max">
-              {plans.map((plan) => (
-                <button
-                  key={plan}
-                  onClick={() => requestSort(plan)}
-                  aria-pressed={activePlan === plan}
-                  className={`px-3 py-1 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 inline-flex items-center gap-2 snap-center min-w-[84px] sm:min-w-[96px] justify-center ${
-                    activePlan === plan
-                      ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  <span>{plan}</span>
-                  <span className="leading-none">{getSortIndicator(plan)}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+          {showIphone17 ? (
+    <>
+      <h6 className="text-sm font-semibold text-gray-400 mb-2 text-center sm:text-right">选择机型：</h6>
+      <div className="bg-gray-800/80 p-1 rounded-xl overflow-x-auto no-scrollbar whitespace-nowrap">
+        <div className="flex gap-2 min-w-max">
+          {iphoneModelChips.map((label) => (
+            <button
+              key={label}
+              onClick={() => setActiveModel(label)}
+              aria-pressed={activeModel === label}
+              className={`px-3 py-1 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 inline-flex items-center gap-2 min-w-[88px] justify-center ${
+                activeModel === label
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <h6 className="text-sm font-semibold text-gray-400 mb-2 text-center sm:text-right">Sort Pricing By Plan:</h6>
+      <div className="bg-gray-800/80 p-1 rounded-xl overflow-x-auto no-scrollbar whitespace-nowrap snap-x snap-mandatory">
+        <div className="flex gap-2 min-w-max">
+          {plans.map((plan) => (
+            <button
+              key={plan}
+              onClick={() => requestSort(plan)}
+              aria-pressed={activePlan === plan}
+              className={`px-3 py-1 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 inline-flex items-center gap-2 snap-center min-w-[84px] sm:min-w-[96px] justify-center ${
+                activePlan === plan
+                  ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              <span>{plan}</span>
+              <span className="leading-none">{getSortIndicator(plan)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  )}
         </div>
       </div>
 
@@ -129,8 +158,8 @@ const PricingTable = () => {
               <tr>
                 <th className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-48">Country/Region</th>
                 <th className="px-6 py-3 w-28">Currency</th>
-                {iphoneModels.map((m) => (
-                  iphoneStorages.map((s) => (
+                {([displayToKey[activeModel]]).map((m) => (
+                  iphoneStorages.filter(s => iphone17PricingData.some(row => row.models?.[m]?.[s])).map((s) => (
                     <th key={`${m}-${s}`} className="px-6 py-3 text-right">{m} {s}</th>
                   ))
                 ))}
@@ -143,10 +172,9 @@ const PricingTable = () => {
                     <div className="flex items-center gap-2 truncate">{row.country}</div>
                   </td>
                   <td className="px-6 py-4 text-gray-400 w-28">{row.currency}</td>
-                  {iphoneModels.map((m) => (
-                    iphoneStorages.map((s) => {
-                      const item = row.models?.[m]?.[s];
-                      if (!item) return <td key={`${row.country}-${m}-${s}`} className="px-6 py-4 text-right text-gray-500">—</td>;
+                  {([displayToKey[activeModel]]).map((m) => (
+                    iphoneStorages.filter(s => row.models?.[m]?.[s]).map((s) => {
+                      const item = row.models[m][s];
                       return (
                         <td key={`${row.country}-${m}-${s}`} className="px-6 py-4 text-right">
                           <div className="flex flex-col items-end">
