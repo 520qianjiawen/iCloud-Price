@@ -451,3 +451,305 @@ export const pricingData = [
     }
   },
 ];
+
+// iPhone 17 Global Price Comparison
+// Data shape mirrors pricingData but nests by model -> storage for clarity
+export const iphone17PricingData = [
+  {
+    country: '🇹🇼 Taiwan',
+    currency: 'TWD',
+    models: {
+      '17': {
+        '256G': { price: 'NT$29,900', cny: 7382, best: false },
+        '512G': { price: 'NT$36,900', cny: 9111, best: false },
+      },
+      'Air': {
+        '256G': { price: 'NT$36,900', cny: 9111, best: false },
+        '512G': { price: 'NT$43,900', cny: 10839, best: false },
+        '1TB':  { price: 'NT$50,900', cny: 12567, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: 'NT$39,900', cny: 9851, best: false },
+        '512G': { price: 'NT$46,900', cny: 11580, best: false },
+        '1TB':  { price: 'NT$53,900', cny: 13308, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: 'NT$44,900', cny: 11086, best: false },
+        '512G': { price: 'NT$51,900', cny: 12814, best: false },
+        '1TB':  { price: 'NT$58,900', cny: 14542, best: false },
+        '2TB':  { price: 'NT$72,900', cny: 17999, best: false },
+      }
+    }
+  },
+  {
+    country: '🇯🇵 Japan',
+    currency: 'JPY',
+    models: {
+      '17': {
+        '256G': { price: '¥129,800', cny: 6296, best: false },
+        '512G': { price: '¥164,800', cny: 7993, best: false },
+      },
+      'Air': {
+        '256G': { price: '¥159,800', cny: 7751, best: false },
+        '512G': { price: '¥194,800', cny: 9448, best: false },
+        '1TB':  { price: '¥229,800', cny: 11146, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: '¥179,800', cny: 8721, best: false },
+        '512G': { price: '¥214,800', cny: 10418, best: false },
+        '1TB':  { price: '¥249,800', cny: 12116, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: '¥194,800', cny: 9448, best: false },
+        '512G': { price: '¥229,800', cny: 11146, best: false },
+        '1TB':  { price: '¥264,800', cny: 12844, best: false },
+        '2TB':  { price: '¥329,800', cny: 15996, best: false },
+      }
+    }
+  },
+  {
+    country: '🇯🇵 Japan (Tax-free)',
+    currency: 'JPY',
+    models: {
+      '17': {
+        '256G': { price: '¥118,000', cny: 5724, best: false },
+        '512G': { price: '¥149,818', cny: 7266, best: false },
+      },
+      'Air': {
+        '256G': { price: '¥145,273', cny: 7046, best: true },
+        '512G': { price: '¥177,091', cny: 8589, best: false },
+        '1TB':  { price: '¥208,909', cny: 10133, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: '¥163,455', cny: 7928, best: false },
+        '512G': { price: '¥195,273', cny: 9471, best: false },
+        '1TB':  { price: '¥227,091', cny: 11015, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: '¥177,091', cny: 8589, best: false },
+        '512G': { price: '¥208,909', cny: 10133, best: false },
+        '1TB':  { price: '¥240,727', cny: 11676, best: false },
+        '2TB':  { price: '¥299,818', cny: 14542, best: false },
+      }
+    }
+  },
+  {
+    country: '🇰🇷 South Korea',
+    currency: 'KRW',
+    models: {
+      '17': {
+        '256G': { price: '₩1,290,000', cny: 6651, best: false },
+        '512G': { price: '₩1,590,000', cny: 8198, best: false },
+      },
+      'Air': {
+        '256G': { price: '₩1,590,000', cny: 8198, best: false },
+        '512G': { price: '₩1,890,000', cny: 9745, best: false },
+        '1TB':  { price: '₩2,190,000', cny: 11292, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: '₩1,790,000', cny: 9229, best: false },
+        '512G': { price: '₩2,090,000', cny: 10776, best: false },
+        '1TB':  { price: '₩2,390,000', cny: 12323, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: '₩1,990,000', cny: 10260, best: false },
+        '512G': { price: '₩2,290,000', cny: 11807, best: false },
+        '1TB':  { price: '₩2,590,000', cny: 13354, best: false },
+        '2TB':  { price: '₩3,190,000', cny: 16448, best: false },
+      }
+    }
+  },
+  {
+    country: '🇹🇭 Thailand',
+    currency: 'THB',
+    models: {
+      '17': {
+        '256G': { price: '฿29,900', cny: 6719, best: false },
+        '512G': { price: '฿37,900', cny: 8516, best: false },
+      },
+      'Air': {
+        '256G': { price: '฿39,900', cny: 8966, best: false },
+        '512G': { price: '฿47,900', cny: 10763, best: false },
+        '1TB':  { price: '฿55,900', cny: 12561, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: '฿43,900', cny: 9864, best: false },
+        '512G': { price: '฿51,900', cny: 11662, best: false },
+        '1TB':  { price: '฿59,900', cny: 13460, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: '฿48,900', cny: 10988, best: false },
+        '512G': { price: '฿56,900', cny: 12785, best: false },
+        '1TB':  { price: '฿64,900', cny: 14583, best: false },
+        '2TB':  { price: '฿80,900', cny: 18178, best: false },
+      }
+    }
+  },
+  {
+    country: '🇭🇰 Hong Kong',
+    currency: 'HKD',
+    models: {
+      '17': {
+        '256G': { price: 'HK$6,899', cny: 6323, best: false },
+        '512G': { price: 'HK$8,599', cny: 7881, best: false },
+      },
+      'Air': {
+        '256G': { price: 'HK$8,599', cny: 7881, best: false },
+        '512G': { price: 'HK$10,299', cny: 9439, best: false },
+        '1TB':  { price: 'HK$11,999', cny: 10997, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: 'HK$9,399', cny: 8614, best: false },
+        '512G': { price: 'HK$11,099', cny: 10172, best: false },
+        '1TB':  { price: 'HK$12,799', cny: 11730, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: 'HK$10,199', cny: 9347, best: false },
+        '512G': { price: 'HK$11,899', cny: 10905, best: false },
+        '1TB':  { price: 'HK$13,599', cny: 12463, best: false },
+        '2TB':  { price: 'HK$16,999', cny: 15580, best: false },
+      }
+    }
+  },
+  {
+    country: '🇺🇸 United States',
+    currency: 'USD',
+    models: {
+      '17': {
+        '256G': { price: '$799', cny: 5706, best: true },
+        '512G': { price: '$999', cny: 7134, best: true },
+      },
+      'Air': {
+        '256G': { price: '$999', cny: 7134, best: false },
+        '512G': { price: '$1,199', cny: 8562, best: true },
+        '1TB':  { price: '$1,399', cny: 9990, best: true },
+      },
+      '17 Pro': {
+        '256G': { price: '$1,099', cny: 7848, best: true },
+        '512G': { price: '$1,299', cny: 9276, best: true },
+        '1TB':  { price: '$1,499', cny: 10704, best: true },
+      },
+      '17 Pro Max': {
+        '256G': { price: '$1,199', cny: 8562, best: true },
+        '512G': { price: '$1,399', cny: 9990, best: true },
+        '1TB':  { price: '$1,599', cny: 11418, best: true },
+        '2TB':  { price: '$1,999', cny: 14275, best: true },
+      }
+    }
+  },
+  {
+    country: '🇨🇦 Canada',
+    currency: 'CAD',
+    models: {
+      '17': {
+        '256G': { price: 'C$1,129', cny: 5824, best: false },
+        '512G': { price: 'C$1,429', cny: 7372, best: false },
+      },
+      'Air': {
+        '256G': { price: 'C$1,449', cny: 7475, best: false },
+        '512G': { price: 'C$1,749', cny: 9023, best: false },
+        '1TB':  { price: 'C$2,049', cny: 10570, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: 'C$1,599', cny: 8249, best: false },
+        '512G': { price: 'C$1,899', cny: 9796, best: false },
+        '1TB':  { price: 'C$2,199', cny: 11344, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: 'C$1,749', cny: 9023, best: false },
+        '512G': { price: 'C$2,049', cny: 10570, best: false },
+        '1TB':  { price: 'C$2,349', cny: 12118, best: false },
+        '2TB':  { price: 'C$2,949', cny: 15213, best: false },
+      }
+    }
+  },
+  {
+    country: '🇦🇺 Australia',
+    currency: 'AUD',
+    models: {
+      '17': {
+        '256G': { price: 'A$1,399', cny: 6620, best: false },
+        '512G': { price: 'A$1,799', cny: 8512, best: false },
+      },
+      'Air': {
+        '256G': { price: 'A$1,799', cny: 8512, best: false },
+        '512G': { price: 'A$2,199', cny: 10405, best: false },
+        '1TB':  { price: 'A$2,599', cny: 12298, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: 'A$1,999', cny: 9459, best: false },
+        '512G': { price: 'A$2,399', cny: 11351, best: false },
+        '1TB':  { price: 'A$2,799', cny: 13244, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: 'A$2,199', cny: 10405, best: false },
+        '512G': { price: 'A$2,599', cny: 12298, best: false },
+        '1TB':  { price: 'A$2,999', cny: 14190, best: false },
+        '2TB':  { price: 'A$3,799', cny: 17976, best: false },
+      }
+    }
+  },
+  {
+    country: '🇸🇬 Singapore',
+    currency: 'SGD',
+    models: {
+      '17': {
+        '256G': { price: 'S$1,299', cny: 7240, best: false },
+        '512G': { price: 'S$1,599', cny: 8912, best: false },
+      },
+      'Air': {
+        '256G': { price: 'S$1,599', cny: 8912, best: false },
+        '512G': { price: 'S$1,899', cny: 10584, best: false },
+        '1TB':  { price: 'S$2,199', cny: 12256, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: 'S$1,749', cny: 9748, best: false },
+        '512G': { price: 'S$2,049', cny: 11420, best: false },
+        '1TB':  { price: 'S$2,349', cny: 13092, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: 'S$1,899', cny: 10584, best: false },
+        '512G': { price: 'S$2,199', cny: 12256, best: false },
+        '1TB':  { price: 'S$2,499', cny: 13928, best: false },
+        '2TB':  { price: 'S$3,099', cny: 17272, best: false },
+      }
+    }
+  },
+  {
+    country: '🇨🇳 Mainland China',
+    currency: 'CNY',
+    models: {
+      '17': {
+        '256G': { price: '¥5,999', cny: 5999, best: false },
+        '512G': { price: '¥7,999', cny: 7999, best: false },
+      },
+      'Air': {
+        '256G': { price: '¥7,999', cny: 7999, best: false },
+        '512G': { price: '¥9,999', cny: 9999, best: false },
+        '1TB':  { price: '¥11,999', cny: 11999, best: false },
+      },
+      '17 Pro': {
+        '256G': { price: '¥8,999', cny: 8999, best: false },
+        '512G': { price: '¥10,999', cny: 10999, best: false },
+        '1TB':  { price: '¥12,999', cny: 12999, best: false },
+      },
+      '17 Pro Max': {
+        '256G': { price: '¥9,999', cny: 9999, best: false },
+        '512G': { price: '¥11,999', cny: 11999, best: false },
+        '1TB':  { price: '¥13,999', cny: 13999, best: false },
+        '2TB':  { price: '¥17,999', cny: 17999, best: false },
+      }
+    }
+  },
+];
+
+// Recommended column order for the iPhone 17 table UI
+export const iphone17Columns = [
+  { key: 'country', label: 'Country/Region' },
+  { key: 'currency', label: 'Currency' },
+  // The following are logical headers your table component can expand into storages
+  { key: '17', label: '17' },
+  { key: 'Air', label: 'Air' },
+  { key: '17 Pro', label: '17 Pro' },
+  { key: '17 Pro Max', label: '17 Pro Max' },
+];
