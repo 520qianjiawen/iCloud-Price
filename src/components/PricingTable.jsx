@@ -85,7 +85,7 @@ const PricingTable = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
            <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 inline-flex items-center gap-2 whitespace-nowrap border border-gray-600/50 bg-transparent text-gray-200 hover:bg-gray-700/40">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M15.75 2.25a.75.75 0 01.75.75v2.25h2.25a.75.75 0 010 1.5H16.5v2.25a.75.75 0 01-1.5 0V6.75h-2.25a.75.75 0 010-1.5h2.25V3a.75.75 0 01.75-.75z"/><path fillRule="evenodd" d="M3 6.75A2.25 2.25 0 015.25 4.5h5.878c.597 0 1.17.237 1.591.659l4.122 4.122c.422.421.659.994.659 1.591v6.878A2.25 2.25 0 0115.25 20.25H5.25A2.25 2.25 0 013 18V6.75zm3 2.25a.75.75 0 000 1.5h6a.75.75 0 000-1.5H6z" clipRule="evenodd"/></svg>
-            Share as Image
+            iPhone7 全球价格比较
           </button>
           <button className="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md text-sm transition-colors duration-200 flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
