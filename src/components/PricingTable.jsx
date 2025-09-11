@@ -153,14 +153,13 @@ const PricingTable = () => {
 
       {showIphone17 ? (
         <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-          <table className="w-full min-w-[900px] text-sm text-left">
+          <table className="w-full min-w-[700px] sm:min-w-[900px] text-sm text-left">
             <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
               <tr>
                 <th className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-48">Country/Region</th>
                 {([displayToKey[activeModel]]).map((m) => (
                   iphoneStorages.filter(s => iphone17PricingData.some(row => row.models?.[m]?.[s])).map((s) => (
-                    <th key={`${m}-${s}`} className="px-6 py-3 text-right">{m} {s}</th>
+                    <th key={`${m}-${s}`} className="px-3 py-3 text-right text-xs sm:text-sm">{m} {s}</th>
                   ))
                 ))}
               </tr>
@@ -168,17 +167,16 @@ const PricingTable = () => {
             <tbody>
               {iphone17PricingData.map((row, idx) => (
                 <tr key={idx} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
-                  <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-48">
-                    <div className="flex items-center gap-2 truncate">{row.country}</div>
+                  <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-32 sm:w-48">
+                    <div className="flex items-center gap-2 truncate text-sm">{row.country}</div>
                   </td>
                   {([displayToKey[activeModel]]).map((m) => (
                     iphoneStorages.filter(s => row.models?.[m]?.[s]).map((s) => {
                       const item = row.models[m][s];
                       return (
-                        <td key={`${row.country}-${m}-${s}`} className="px-6 py-4 text-right">
+                        <td key={`${row.country}-${m}-${s}`} className="px-3 py-4 text-right">
                           <div className="flex flex-col items-end">
-                            <span className="font-medium text-white font-mono">{item.price}</span>
-                            <span className="text-xs text-gray-400 mt-1 font-mono">¥{item.cny}</span>
+                            <span className="font-medium text-white font-mono text-sm">{item.price}</span>
                             {item.best && (
                               <span className="text-[10px] bg-green-500 text-white rounded-full px-2 py-0.5 mt-1">Best</span>
                             )}
