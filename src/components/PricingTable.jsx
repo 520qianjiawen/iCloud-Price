@@ -153,11 +153,11 @@ const PricingTable = () => {
 
       {showIphone17 ? (
         <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
           <table className="w-full min-w-[900px] text-sm text-left">
             <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
               <tr>
                 <th className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-48">Country/Region</th>
-                <th className="px-6 py-3 w-28">Currency</th>
                 {([displayToKey[activeModel]]).map((m) => (
                   iphoneStorages.filter(s => iphone17PricingData.some(row => row.models?.[m]?.[s])).map((s) => (
                     <th key={`${m}-${s}`} className="px-6 py-3 text-right">{m} {s}</th>
@@ -171,7 +171,6 @@ const PricingTable = () => {
                   <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-48">
                     <div className="flex items-center gap-2 truncate">{row.country}</div>
                   </td>
-                  <td className="px-6 py-4 text-gray-400 w-28">{row.currency}</td>
                   {([displayToKey[activeModel]]).map((m) => (
                     iphoneStorages.filter(s => row.models?.[m]?.[s]).map((s) => {
                       const item = row.models[m][s];
