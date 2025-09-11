@@ -95,41 +95,55 @@ const PricingPage = () => {
       </div>
 
       {showIphone17 ? (
-        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-2xl">
-          <table className="w-full text-left whitespace-nowrap">
-            <thead className="bg-gray-700 text-gray-300 uppercase text-sm">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Country/Region</th>
-                <th className="px-6 py-4 font-semibold">Currency</th>
-                {iphoneModels.map((model) => (
-                  iphoneStorages.map((stg) => (
-                    <th key={`${model}-${stg}`} className="px-6 py-4 font-semibold">
-                      {model} {stg}
-                    </th>
-                  ))
-                ))}
-              </tr>
-            </thead>
+        <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-max">
+              <thead className="bg-gray-700 text-gray-300 uppercase">
+                <tr>
+                  <th className="px-4 py-3 font-semibold text-xs sm:text-sm sticky left-0 z-10 bg-gray-700">地区</th>
+                  <th className="px-2 py-3 font-semibold text-xs sm:text-sm hidden sm:table-cell">货币</th>
+                  {iphoneModels.map((model) => (
+                    iphoneStorages.map((stg) => (
+                      <th key={`${model}-${stg}`} className="px-2 py-3 font-semibold text-xs sm:text-sm text-center min-w-[80px] sm:min-w-[100px]">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] sm:text-xs">{model}</span>
+                          <span className="text-[10px] sm:text-xs font-mono">{stg}</span>
+                        </div>
+                      </th>
+                    ))
+                  ))}
+                </tr>
+              </thead>
             <tbody className="divide-y divide-gray-700">
               {iphone17PricingData.map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-700/50 transition-colors duration-200">
-                  <td className="px-6 py-4 font-medium text-white">{row.country}</td>
-                  <td className="px-6 py-4 text-gray-400">{row.currency}</td>
+                <tr key={idx} className="hover:bg-gray-700/50 transition-colors duration-200 group">
+                  <td className="px-4 py-3 font-medium text-white text-xs sm:text-sm sticky left-0 z-5 bg-gray-800 group-hover:bg-gray-700 whitespace-nowrap">
+                    {row.country}
+                  </td>
+                  <td className="px-2 py-3 text-gray-400 text-xs hidden sm:table-cell">{row.currency}</td>
                   {iphoneModels.map((model) => (
                     iphoneStorages.map((stg) => {
                       const item = row.models?.[model]?.[stg];
                       if (!item) {
                         return (
-                          <td key={`${row.country}-${model}-${stg}`} className="px-6 py-4 text-gray-500">—</td>
+                          <td key={`${row.country}-${model}-${stg}`} className="px-2 py-3 text-gray-500 text-center">
+                            <span className="text-[10px]">—</span>
+                          </td>
                         );
                       }
                       return (
-                        <td key={`${row.country}-${model}-${stg}`} className="px-6 py-4">
-                          <div className="flex flex-col">
-                            <span className="font-mono font-medium text-white">{item.price}</span>
-                            <span className="text-xs text-gray-500 font-mono">¥{item.cny.toFixed(2)}</span>
+                        <td key={`${row.country}-${model}-${stg}`} className="px-2 py-3 text-center">
+                          <div className="flex flex-col items-center space-y-1">
+                            <span className="font-mono font-medium text-white text-xs sm:text-sm leading-tight">
+                              {item.price}
+                            </span>
+                            <span className="text-[10px] text-green-400 font-mono bg-green-900/20 px-1 py-0.5 rounded">
+                              ¥{item.cny.toFixed(2)}
+                            </span>
                             {item.best && (
-                              <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">Best</span>
+                              <span className="text-[10px] font-bold text-white bg-green-600 px-1.5 py-0.5 rounded-full">
+                                最佳
+                              </span>
                             )}
                           </div>
                         </td>
@@ -141,35 +155,48 @@ const PricingPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
       ) : (
-        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-2xl">
-          <table className="w-full text-left whitespace-nowrap">
-            <thead className="bg-gray-700 text-gray-300 uppercase text-sm">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Country</th>
-                <th className="px-6 py-4 font-semibold">Currency</th>
-                {plans.map((plan) => (
-                  <th key={plan} className="px-6 py-4 font-semibold cursor-pointer" onClick={() => requestSort(plan)}>
-                    {plan} {getSortIndicator(plan)}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+        <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-max">
+              <thead className="bg-gray-700 text-gray-300 uppercase">
+                <tr>
+                  <th className="px-4 py-3 font-semibold text-xs sm:text-sm sticky left-0 z-10 bg-gray-700">地区</th>
+                  <th className="px-2 py-3 font-semibold text-xs sm:text-sm hidden sm:table-cell">货币</th>
+                  {plans.map((plan) => (
+                    <th 
+                      key={plan} 
+                      className="px-2 py-3 font-semibold text-xs sm:text-sm text-center cursor-pointer min-w-[70px] sm:min-w-[90px]" 
+                      onClick={() => requestSort(plan)}
+                    >
+                      <div className="flex flex-col items-center">
+                        <span className="text-[10px] sm:text-xs">{plan}</span>
+                        <span className="text-[10px] mt-1">{getSortIndicator(plan)}</span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
             <tbody className="divide-y divide-gray-700">
               {sortedData.map((countryData, index) => (
-                <tr key={index} className="hover:bg-gray-700/50 transition-colors duration-200">
-                  <td className="px-6 py-4 font-medium text-white">{countryData.country}</td>
-                  <td className="px-6 py-4 text-gray-400">{countryData.currency}</td>
+                <tr key={index} className="hover:bg-gray-700/50 transition-colors duration-200 group">
+                  <td className="px-4 py-3 font-medium text-white text-xs sm:text-sm sticky left-0 z-5 bg-gray-800 group-hover:bg-gray-700 whitespace-nowrap">
+                    {countryData.country}
+                  </td>
+                  <td className="px-2 py-3 text-gray-400 text-xs hidden sm:table-cell">{countryData.currency}</td>
                   {countryData.plans.map((plan) => (
-                    <td key={plan.plan} className={`px-6 py-4 ${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
-                      <div className="flex flex-col">
-                        <span className="font-mono font-medium text-white">
-                          {plan.price} {countryData.currency}
+                    <td key={plan.plan} className={`px-2 py-3 text-center ${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
+                      <div className="flex flex-col items-center space-y-1">
+                        <span className="font-mono font-medium text-white text-xs sm:text-sm leading-tight">
+                          {plan.price}
                         </span>
-                        <span className="text-xs text-gray-500 font-mono">¥{plan.cny}</span>
+                        <span className="text-[10px] text-green-400 font-mono bg-green-900/20 px-1 py-0.5 rounded">
+                          ¥{plan.cny.toFixed(2)}
+                        </span>
                         {plan.isBest && (
-                          <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">
-                            Best
+                          <span className="text-[10px] font-bold text-white bg-green-600 px-1.5 py-0.5 rounded-full">
+                            最佳
                           </span>
                         )}
                       </div>
@@ -180,6 +207,7 @@ const PricingPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
       )}
     </div>
   );

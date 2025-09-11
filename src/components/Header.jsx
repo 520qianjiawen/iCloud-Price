@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ showIphone17 = false }) => {
   return (
     <header className="text-center mb-8">
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
-        iCloud+ 全球定价比较
+        {showIphone17 ? 'iPhone 17 全球定价比较' : 'iCloud+ 全球定价比较'}
       </h1>
       <p className="text-sm sm:text-base text-gray-400 mb-4">
-        找到全球最好的iCloud+ 价格
+        {showIphone17 ? '找到全球最好的iPhone 17价格' : '找到全球最好的iCloud+ 价格'}
       </p>
       <div className="text-xs sm:text-sm text-gray-500">
         <span>来自</span>
