@@ -49,9 +49,11 @@ const PricingPage = () => {
     <div className="container mx-auto px-4 py-8 md:py-12">
       <header className="text-center mb-10">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 animate-fade-in-up">
-          iCloud+ 全球定价比较
+          {showIphone17 ? 'iPhone 17 全球定价比较' : 'iCloud+ 全球定价比较'}
         </h1>
-        <p className="text-lg text-gray-400 mb-4">找到全球最好的iCloud+ 价格</p>
+        <p className="text-lg text-gray-400 mb-4">
+          {showIphone17 ? '找到全球最好的iPhone 17价格' : '找到全球最好的iCloud+ 价格'}
+        </p>
         <div className="text-sm text-gray-500">
           来自<a href="https://support.apple.com/en-us/108047" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">苹果</a>的每日更新数据 • 由<a href="https://neutemu.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Neutemu</a>开发
         </div>
@@ -125,7 +127,7 @@ const PricingPage = () => {
                         <td key={`${row.country}-${model}-${stg}`} className="px-6 py-4">
                           <div className="flex flex-col">
                             <span className="font-mono font-medium text-white">{item.price}</span>
-                            <span className="text-xs text-gray-500 font-mono">¥{item.cny}</span>
+                            <span className="text-xs text-gray-500 font-mono">¥{item.cny.toFixed(2)}</span>
                             {item.best && (
                               <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">Best</span>
                             )}
