@@ -66,21 +66,21 @@ const PricingTable = () => {
     container.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
   }, [activePlan]);
 
-  const CellContent = ({ planData, isMin }) => {
-    if (!planData) return <span className="text-gray-500">-</span>;
+    const CellContent = ({ planData, isMin }) => {
+    if (!planData) return <span className="text-gray-500 text-xs">-</span>;
     return (
       <div className={`flex flex-col ${
         isMin
-          ? 'bg-green-600/25 ring-2 ring-green-400/50 rounded-md px-2 py-1'
+          ? 'bg-green-600/25 ring-2 ring-green-400/50 rounded-md px-1.5 py-0.5'
           : ''
       }` }>
-        <span className="font-medium text-white">{planData.price}</span>
+        <span className="font-medium text-white text-xs sm:text-sm">{planData.price}</span>
         {planData.best && (
-          <span className="text-xs bg-green-500 text-white rounded-full px-2 py-0.5 mt-1 self-start">
+          <span className="text-[10px] bg-green-500 text-white rounded-full px-1.5 py-0.5 mt-1 self-start">
             Best
           </span>
         )}
-        <span className="text-xs text-gray-400 mt-1">¥{planData.cny.toFixed(2)}</span>
+        <span className="text-[10px] text-gray-400 mt-1">¥{planData.cny.toFixed(2)}</span>
       </div>
     );
   };
