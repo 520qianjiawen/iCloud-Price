@@ -178,6 +178,7 @@ const PricingTable = () => {
                         <td key={`${row.country}-${m}-${s}`} className="px-2 py-3 sm:px-3 sm:py-4 text-right">
                           <div className="flex flex-col items-end">
                             <span className="font-medium text-white font-mono text-xs sm:text-sm">{item.price}</span>
+                            <span className="text-[10px] text-gray-400 mt-1 font-mono">¥{item.cny.toFixed(2)}</span>
                             {item.best && (
                               <span className="text-[10px] bg-green-500 text-white rounded-full px-2 py-0.5 mt-1">Best</span>
                             )}
