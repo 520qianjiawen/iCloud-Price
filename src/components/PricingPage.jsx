@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { pricingData } from '../data/pricingData';
+import { pricingData, iphone17PricingData } from '../data/pricingData';
 
 const plans = ["50GB", "200GB", "2TB", "6TB", "12TB"];
+const iphoneModels = ["17", "Air", "17 Pro", "17 Pro Max"];
+const iphoneStorages = ["256G", "512G", "1TB", "2TB"];
 
 const PricingPage = () => {
   const [activePlan, setActivePlan] = useState('50GB');
+  const [showIphone17, setShowIphone17] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: '50GB', direction: 'ascending' });
 
   const sortedData = useMemo(() => {
@@ -24,7 +27,7 @@ const PricingPage = () => {
       });
     }
     return sortableItems;
-  }, [pricingData, sortConfig]);
+  }, [sortConfig]);
 
   const requestSort = (key) => {
     let direction = 'ascending';
@@ -55,9 +58,12 @@ const PricingPage = () => {
       </header>
 
       <div className="flex justify-center items-center gap-3 md:gap-4 mb-8">
-        <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 inline-flex items-center gap-2 whitespace-nowrap border border-gray-600/50 bg-transparent text-gray-200 hover:bg-gray-700/40">
+        <button
+          onClick={() => setShowIphone17(v => !v)}
+          className="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 inline-flex items-center gap-2 whitespace-nowrap border border-gray-600/50 bg-transparent text-gray-200 hover:bg-gray-700/40"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M15.75 2.25a.75.75 0 01.75.75v2.25h2.25a.75.75 0 010 1.5H16.5v2.25a.75.75 0 01-1.5 0V6.75h-2.25a.75.75 0 010-1.5h2.25V3a.75.75 0 01.75-.75z"/><path fillRule="evenodd" d="M3 6.75A2.25 2.25 0 015.25 4.5h5.878c.597 0 1.17.237 1.591.659l4.122 4.122c.422.421.659.994.659 1.591v6.878A2.25 2.25 0 0115.25 20.25H5.25A2.25 2.25 0 013 18V6.75zm3 2.25a.75.75 0 000 1.5h6a.75.75 0 000-1.5H6z" clipRule="evenodd"/></svg>
-          Share as Image
+          {showIphone17 ? '返回 iCloud+ 价格' : 'iPhone 17 全球价格'}
         </button>
         <button className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-lg hover:bg-pink-500 transition-colors">
           Sponsor
@@ -86,44 +92,93 @@ const PricingPage = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-2xl">
-        <table className="w-full text-left whitespace-nowrap">
-          <thead className="bg-gray-700 text-gray-300 uppercase text-sm">
-            <tr>
-              <th className="px-6 py-4 font-semibold">Country</th>
-              <th className="px-6 py-4 font-semibold">Currency</th>
-              {plans.map((plan) => (
-                <th key={plan} className="px-6 py-4 font-semibold cursor-pointer" onClick={() => requestSort(plan)}>
-                  {plan} {getSortIndicator(plan)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-700">
-            {sortedData.map((countryData, index) => (
-              <tr key={index} className="hover:bg-gray-700/50 transition-colors duration-200">
-                <td className="px-6 py-4 font-medium text-white">{countryData.country}</td>
-                <td className="px-6 py-4 text-gray-400">{countryData.currency}</td>
-                {countryData.plans.map((plan) => (
-                  <td key={plan.plan} className={`px-6 py-4 ${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
-                    <div className="flex flex-col">
-                      <span className="font-mono font-medium text-white">
-                        {plan.price} {countryData.currency}
-                      </span>
-                      <span className="text-xs text-gray-500 font-mono">¥{plan.cny}</span>
-                      {plan.isBest && (
-                        <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">
-                          Best
-                        </span>
-                      )}
-                    </div>
-                  </td>
+      {showIphone17 ? (
+        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-2xl">
+          <table className="w-full text-left whitespace-nowrap">
+            <thead className="bg-gray-700 text-gray-300 uppercase text-sm">
+              <tr>
+                <th className="px-6 py-4 font-semibold">Country/Region</th>
+                <th className="px-6 py-4 font-semibold">Currency</th>
+                {iphoneModels.map((model) => (
+                  iphoneStorages.map((stg) => (
+                    <th key={`${model}-${stg}`} className="px-6 py-4 font-semibold">
+                      {model} {stg}
+                    </th>
+                  ))
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-gray-700">
+              {iphone17PricingData.map((row, idx) => (
+                <tr key={idx} className="hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="px-6 py-4 font-medium text-white">{row.country}</td>
+                  <td className="px-6 py-4 text-gray-400">{row.currency}</td>
+                  {iphoneModels.map((model) => (
+                    iphoneStorages.map((stg) => {
+                      const item = row.models?.[model]?.[stg];
+                      if (!item) {
+                        return (
+                          <td key={`${row.country}-${model}-${stg}`} className="px-6 py-4 text-gray-500">—</td>
+                        );
+                      }
+                      return (
+                        <td key={`${row.country}-${model}-${stg}`} className="px-6 py-4">
+                          <div className="flex flex-col">
+                            <span className="font-mono font-medium text-white">{item.price}</span>
+                            <span className="text-xs text-gray-500 font-mono">¥{item.cny}</span>
+                            {item.best && (
+                              <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">Best</span>
+                            )}
+                          </div>
+                        </td>
+                      );
+                    })
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-2xl">
+          <table className="w-full text-left whitespace-nowrap">
+            <thead className="bg-gray-700 text-gray-300 uppercase text-sm">
+              <tr>
+                <th className="px-6 py-4 font-semibold">Country</th>
+                <th className="px-6 py-4 font-semibold">Currency</th>
+                {plans.map((plan) => (
+                  <th key={plan} className="px-6 py-4 font-semibold cursor-pointer" onClick={() => requestSort(plan)}>
+                    {plan} {getSortIndicator(plan)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-700">
+              {sortedData.map((countryData, index) => (
+                <tr key={index} className="hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="px-6 py-4 font-medium text-white">{countryData.country}</td>
+                  <td className="px-6 py-4 text-gray-400">{countryData.currency}</td>
+                  {countryData.plans.map((plan) => (
+                    <td key={plan.plan} className={`px-6 py-4 ${activePlan === plan.plan ? 'bg-blue-900/20' : ''}`}>
+                      <div className="flex flex-col">
+                        <span className="font-mono font-medium text-white">
+                          {plan.price} {countryData.currency}
+                        </span>
+                        <span className="text-xs text-gray-500 font-mono">¥{plan.cny}</span>
+                        {plan.isBest && (
+                          <span className="mt-1 text-xs font-bold text-green-400 bg-green-900/50 px-2 py-0.5 rounded-full w-min">
+                            Best
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
