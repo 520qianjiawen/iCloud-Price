@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { pricingData } from '../data/pricingData';
+import { pricingData, iphone17PricingData } from '../data/pricingData';
 
 const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
+const iphoneModels = ['17', 'Air', '17 Pro', '17 Pro Max'];
+const iphoneStorages = ['256G', '512G', '1TB', '2TB'];
 
 const PricingTable = () => {
   const [activePlan, setActivePlan] = useState('50GB');
+  const [showIphone17, setShowIphone17] = useState(false);
   const [sortDirection, setSortDirection] = useState('ascending'); // 'ascending' | 'descending'
   const scrollContainerRef = useRef(null);
   const headerRefs = useRef({}); // map of plan -> th element
@@ -83,9 +86,12 @@ const PricingTable = () => {
     <div className="w-full">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
-           <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 inline-flex items-center gap-2 whitespace-nowrap border border-gray-600/50 bg-transparent text-gray-200 hover:bg-gray-700/40">
+           <button
+            onClick={() => setShowIphone17(v => !v)}
+            className="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 inline-flex items-center gap-2 whitespace-nowrap border border-gray-600/50 bg-transparent text-gray-200 hover:bg-gray-700/40"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M15.75 2.25a.75.75 0 01.75.75v2.25h2.25a.75.75 0 010 1.5H16.5v2.25a.75.75 0 01-1.5 0V6.75h-2.25a.75.75 0 010-1.5h2.25V3a.75.75 0 01.75-.75z"/><path fillRule="evenodd" d="M3 6.75A2.25 2.25 0 015.25 4.5h5.878c.597 0 1.17.237 1.591.659l4.122 4.122c.422.421.659.994.659 1.591v6.878A2.25 2.25 0 0115.25 20.25H5.25A2.25 2.25 0 013 18V6.75zm3 2.25a.75.75 0 000 1.5h6a.75.75 0 000-1.5H6z" clipRule="evenodd"/></svg>
-            iPhone7 全球价格比较
+            {showIphone17 ? '返回 iCloud+ 价格' : 'iPhone 17 全球价格比较'}
           </button>
           <button className="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md text-sm transition-colors duration-200 flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
@@ -116,48 +122,93 @@ const PricingTable = () => {
         </div>
       </div>
 
-      <div ref={scrollContainerRef} className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-        <table className="w-full min-w-[680px] sm:min-w-[900px] md:min-w-[1000px] text-sm text-left">
-          <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
-            <tr>
-              <th scope="col" className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-40 sm:w-56">Country</th>
-              <th scope="col" className="px-6 py-3 w-24 sm:w-28">Currency</th>
-              {plans.map(plan => (
-                <th
-                  key={plan}
-                  ref={(el) => { if (el) headerRefs.current[plan] = el; }}
-                  scope="col"
-                  className="px-6 py-3 text-right"
-                >
-                  {plan}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedData.map((data, index) => (
-              <tr key={index} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
-                <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-40 sm:w-56 max-w-[10rem] sm:max-w-[14rem]">
-                  <div className="flex items-center gap-2 truncate">{data.country}</div>
-                </td>
-                <td className="px-6 py-4 text-gray-400 w-24 sm:w-28">{data.currency}</td>
-                {plans.map(plan => {
-                  const planData = data.plans[plan];
-                  const isMin = planData && Number(planData.cny) === minPriceByPlan[plan];
-                  return (
-                    <td
-                      key={plan}
-                      className={`px-6 py-4 text-right ${activePlan === plan ? 'bg-blue-900/20' : ''}`}
-                    >
-                      <CellContent planData={planData} isMin={isMin} />
-                    </td>
-                  );
-                })}
+      {showIphone17 ? (
+        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+          <table className="w-full min-w-[900px] text-sm text-left">
+            <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
+              <tr>
+                <th className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-48">Country/Region</th>
+                <th className="px-6 py-3 w-28">Currency</th>
+                {iphoneModels.map((m) => (
+                  iphoneStorages.map((s) => (
+                    <th key={`${m}-${s}`} className="px-6 py-3 text-right">{m} {s}</th>
+                  ))
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {iphone17PricingData.map((row, idx) => (
+                <tr key={idx} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
+                  <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-48">
+                    <div className="flex items-center gap-2 truncate">{row.country}</div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-400 w-28">{row.currency}</td>
+                  {iphoneModels.map((m) => (
+                    iphoneStorages.map((s) => {
+                      const item = row.models?.[m]?.[s];
+                      if (!item) return <td key={`${row.country}-${m}-${s}`} className="px-6 py-4 text-right text-gray-500">—</td>;
+                      return (
+                        <td key={`${row.country}-${m}-${s}`} className="px-6 py-4 text-right">
+                          <div className="flex flex-col items-end">
+                            <span className="font-medium text-white font-mono">{item.price}</span>
+                            <span className="text-xs text-gray-400 mt-1 font-mono">¥{item.cny}</span>
+                            {item.best && (
+                              <span className="text-[10px] bg-green-500 text-white rounded-full px-2 py-0.5 mt-1">Best</span>
+                            )}
+                          </div>
+                        </td>
+                      );
+                    })
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div ref={scrollContainerRef} className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+          <table className="w-full min-w-[680px] sm:min-w-[900px] md:min-w-[1000px] text-sm text-left">
+            <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
+              <tr>
+                <th scope="col" className="px-6 py-3 sticky left-0 z-30 bg-gray-800 w-40 sm:w-56">Country</th>
+                <th scope="col" className="px-6 py-3 w-24 sm:w-28">Currency</th>
+                {plans.map(plan => (
+                  <th
+                    key={plan}
+                    ref={(el) => { if (el) headerRefs.current[plan] = el; }}
+                    scope="col"
+                    className="px-6 py-3 text-right"
+                  >
+                    {plan}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.map((data, index) => (
+                <tr key={index} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
+                  <td className="px-6 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-40 sm:w-56 max-w-[10rem] sm:max-w-[14rem]">
+                    <div className="flex items-center gap-2 truncate">{data.country}</div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-400 w-24 sm:w-28">{data.currency}</td>
+                  {plans.map(plan => {
+                    const planData = data.plans[plan];
+                    const isMin = planData && Number(planData.cny) === minPriceByPlan[plan];
+                    return (
+                      <td
+                        key={plan}
+                        className={`px-6 py-4 text-right ${activePlan === plan ? 'bg-blue-900/20' : ''}`}
+                      >
+                        <CellContent planData={planData} isMin={isMin} />
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
