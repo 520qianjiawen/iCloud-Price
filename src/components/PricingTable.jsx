@@ -152,45 +152,82 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
       </div>
 
       {showIphone17 ? (
-        <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-          <table className="w-full min-w-[600px] sm:min-w-[700px] text-xs sm:text-sm text-left">
-            <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
-              <tr>
-                <th className="px-4 py-2 sm:px-6 sm:py-3 sticky left-0 z-30 bg-gray-800 w-28 sm:w-48 text-sm">地区</th>
-                {([displayToKey[activeModel]]).map((m) => (
-                  iphoneStorages.filter(s => iphone17PricingData.some(row => row.models?.[m]?.[s])).map((s) => (
-                    <th key={`${m}-${s}`} className="px-2 py-2 sm:px-3 sm:py-3 text-right">{m} {s}</th>
-                  ))
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {iphone17PricingData.map((row, idx) => (
-                <tr key={idx} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
-                  <td className="px-4 py-3 sm:px-6 sm:py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-28 sm:w-48">
-                    <div className="flex items-center gap-2 truncate text-xs sm:text-sm">{row.country}</div>
-                  </td>
-                  {([displayToKey[activeModel]]).map((m) => (
-                    iphoneStorages.filter(s => row.models?.[m]?.[s]).map((s) => {
+        <>
+          {/* Mobile: card/grid layout to avoid horizontal scroll */}
+          <div className="block sm:hidden space-y-3">
+            {iphone17PricingData.map((row, idx) => {
+              const m = displayToKey[activeModel];
+              const storages = iphoneStorages.filter((s) => row.models?.[m]?.[s]);
+              return (
+                <div key={idx} className="bg-gray-800 rounded-lg shadow-lg p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="font-medium text-white text-sm truncate">{row.country}</div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {storages.map((s) => {
                       const item = row.models[m][s];
                       return (
-                        <td key={`${row.country}-${m}-${s}`} className="px-2 py-3 sm:px-3 sm:py-4 text-right">
-                          <div className="flex flex-col items-end">
-                            <span className="font-medium text-white font-mono text-xs sm:text-sm">{item.price}</span>
-                            <span className="text-[10px] text-gray-400 mt-1 font-mono">¥{item.cny.toFixed(2)}</span>
+                        <div key={`${row.country}-${m}-${s}`} className="bg-gray-700/40 rounded-md p-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[11px] text-gray-300">{m} {s}</span>
                             {item.best && (
-                              <span className="text-[10px] bg-green-500 text-white rounded-full px-1.5 py-0.5 mt-1">最佳</span>
+                              <span className="text-[10px] bg-green-600 text-white rounded-full px-1 py-0.5">最佳</span>
                             )}
                           </div>
-                        </td>
+                          <div className="mt-1 flex flex-col items-start">
+                            <span className="font-mono font-medium text-white text-xs">{item.price}</span>
+                            <span className="text-[10px] text-gray-400">¥{item.cny.toFixed(2)}</span>
+                          </div>
+                        </div>
                       );
-                    })
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop/tablet: keep wide table with horizontal scroll */}
+          <div className="hidden sm:block overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+            <table className="w-full min-w-[700px] text-xs sm:text-sm text-left">
+              <thead className="text-xs text-gray-300 uppercase bg-gray-700/50">
+                <tr>
+                  <th className="px-4 py-2 sm:px-6 sm:py-3 sticky left-0 z-30 bg-gray-800 w-48 text-sm">地区</th>
+                  {([displayToKey[activeModel]]).map((m) => (
+                    iphoneStorages.filter(s => iphone17PricingData.some(row => row.models?.[m]?.[s])).map((s) => (
+                      <th key={`${m}-${s}`} className="px-3 py-3 text-right">{m} {s}</th>
+                    ))
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {iphone17PricingData.map((row, idx) => (
+                  <tr key={idx} className="group border-b border-gray-700 hover:bg-gray-700/50 transition-colors duration-150">
+                    <td className="px-4 py-4 font-medium text-white sticky left-0 z-20 bg-gray-800 group-hover:bg-gray-700 border-r border-gray-700 w-48">
+                      <div className="flex items-center gap-2 truncate text-sm">{row.country}</div>
+                    </td>
+                    {([displayToKey[activeModel]]).map((m) => (
+                      iphoneStorages.filter(s => row.models?.[m]?.[s]).map((s) => {
+                        const item = row.models[m][s];
+                        return (
+                          <td key={`${row.country}-${m}-${s}`} className="px-3 py-4 text-right">
+                            <div className="flex flex-col items-end">
+                              <span className="font-medium text-white font-mono text-sm">{item.price}</span>
+                              <span className="text-[10px] text-gray-400 mt-1 font-mono">¥{item.cny.toFixed(2)}</span>
+                              {item.best && (
+                                <span className="text-[10px] bg-green-500 text-white rounded-full px-1.5 py-0.5 mt-1">最佳</span>
+                              )}
+                            </div>
+                          </td>
+                        );
+                      })
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       ) : (
         <div ref={scrollContainerRef} className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
           <table className="w-full min-w-[600px] sm:min-w-[680px] md:min-w-[900px] text-xs sm:text-sm text-left">
