@@ -6,9 +6,16 @@ const Header = ({ showIphone17 = false }) => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
         {showIphone17 ? 'iPhone 17 全球定价比较' : 'iCloud+ 全球定价比较'}
       </h1>
-      <p className="text-sm sm:text-base text-gray-400 mb-4">
+      <p className="text-sm sm:text-base text-gray-400 mb-2">
         {showIphone17 ? '找到全球最好的iPhone 17价格' : '找到全球最好的iCloud+ 价格'}
       </p>
+      {showIphone17 && (
+        <div className="text-xs sm:text-sm text-gray-400 max-w-4xl mx-auto leading-relaxed mb-4 px-4 sm:px-0">
+          <p>
+            iPhone 17 Air：所有国家和地区均仅支持 eSIM。iPhone 17、iPhone 17 Pro 和 iPhone 17 Pro Max：美国、日本和加拿大仅支持 eSIM。香港、韩国、澳大利亚、新加坡、泰国和台湾使用一个实体 SIM 卡槽加 eSIM。中国大陆使用两个实体 SIM 卡槽，不支持 eSIM。
+          </p>
+        </div>
+      )}
       <div className="text-xs sm:text-sm text-gray-500">
         <span>来自</span>
         <a href="https://support.apple.com/en-us/108047" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
