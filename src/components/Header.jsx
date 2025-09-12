@@ -21,16 +21,14 @@ const Header = ({ showIphone17 = false }) => {
           <div>
             型号差异：请参考下图了解各地区型号差异。
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              const path = '/iPhone%2017%20Pro%20各地区版本区别.jpg';
-              window.open(path, '_blank', 'noopener');
-            }}
+          <a
+            href="/iPhone 17 Pro 各地区版本区别.jpg"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-3 py-1.5 rounded-md bg-blue-600 text-white hover:bg-blue-500 transition-colors text-xs sm:text-sm"
           >
             查看图片：iPhone 17 Pro 各地区版本区别.jpg
-          </button>
+          </a>
         </div>
       ) : (
         <div className="text-xs sm:text-sm text-gray-500">
