@@ -167,7 +167,10 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                     {storages.map((s) => {
                       const item = row.models[m][s];
                       return (
-                        <div key={`${row.country}-${m}-${s}`} className="bg-gray-700/40 rounded-md p-2">
+                        <div
+                          key={`${row.country}-${m}-${s}`}
+                          className={`rounded-md p-2 ${item.best ? 'bg-green-700/25 ring-2 ring-green-500/30' : 'bg-gray-700/40'}`}
+                        >
                           <div className="flex items-center justify-between">
                             <span className="text-[11px] text-gray-300">{m} {s}</span>
                             {item.best && (
@@ -176,7 +179,7 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                           </div>
                           <div className="mt-1 flex flex-col items-start">
                             <span className="font-mono font-medium text-white text-xs">{item.price}</span>
-                            <span className="text-[10px] text-gray-400">¥{item.cny.toFixed(2)}</span>
+                            <span className="text-[10px] text-gray-100 bg-green-900/30 rounded px-1" >¥{item.cny.toFixed(2)}</span>
                           </div>
                         </div>
                       );
@@ -211,9 +214,9 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                         const item = row.models[m][s];
                         return (
                           <td key={`${row.country}-${m}-${s}`} className="px-3 py-4 text-right">
-                            <div className="flex flex-col items-end">
+                            <div className={`flex flex-col items-end rounded-md px-2 py-1 ${item.best ? 'bg-green-700/20 ring-2 ring-green-500/30' : ''}`}>
                               <span className="font-medium text-white font-mono text-sm">{item.price}</span>
-                              <span className="text-[10px] text-gray-400 mt-1 font-mono">¥{item.cny.toFixed(2)}</span>
+                              <span className={`text-[10px] mt-1 font-mono ${item.best ? 'text-white bg-green-900/30 rounded px-1' : 'text-gray-400'}`}>¥{item.cny.toFixed(2)}</span>
                               {item.best && (
                                 <span className="text-[10px] bg-green-500 text-white rounded-full px-1.5 py-0.5 mt-1">最佳</span>
                               )}

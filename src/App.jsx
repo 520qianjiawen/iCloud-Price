@@ -4,7 +4,7 @@ import PricingTable from './components/PricingTable';
 import Footer from './components/Footer';
 
 function App() {
-  const [showIphone17, setShowIphone17] = useState(false);
+  const [showIphone17, setShowIphone17] = useState(true);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
