@@ -261,7 +261,7 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                     return (
                       <td
                         key={plan}
-                        className={`px-6 py-4 text-right ${activePlan === plan ? 'bg-blue-900/20' : ''}`}
+                        className="px-6 py-4 text-right hover:bg-blue-900/25 transition-colors duration-150"
                       >
                         <CellContent planData={planData} isMin={isMin} />
                       </td>
