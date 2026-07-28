@@ -1,106 +1,172 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const fs = require('fs');
-const path = require('path');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pricingDataPath = path.join(__dirname, 'src/data/pricingData.js');
+const ratesUrl = 'https://open.er-api.com/v6/latest/CNY';
 
-// Hardcoded path to the data file
-const pricingDataPath = '/Users/cavon/Downloads/iCloud price/src/data/pricingData.js';
-
-const rates = {
-  NGN: 0.0048, PKR: 0.0251, RUB: 0.0878, KRW: 0.00475, EGP: 0.1484,
-  INR: 0.078, ZAR: 0.4196, PHP: 0.1201, MXN: 0.3921, IDR: 0.00042,
-  MYR: 1.72, KZT: 0.0138, CAD: 5.11, TRY: 0.165, AUD: 4.66,
-  COP: 0.0018, TWD: 0.2232, NZD: 4.0764, TZS: 0.0028, JPY: 0.0455,
-  HKD: 0.905, SAR: 1.878, AED: 1.92, BRL: 1.277, THB: 0.223,
-  PEN: 2.097, RON: 1.625, SGD: 5.463, EUR: 8.26, ILS: 2.188,
-  HUF: 0.0212, NOK: 0.6916, CZK: 0.3406, CHF: 8.867, SEK: 0.7575,
-  GBP: 9.4281, PLN: 1.96225, DKK: 1.10795, USD: 7.0515, CNY: 1,
-};
-
-// Helper to extract a numerical price from a formatted string
 function getPrice(priceString) {
   if (typeof priceString !== 'string') {
-    return 0;
+    throw new TypeError(`Invalid price: ${priceString}`);
   }
-  // Remove currency symbols, commas, and other non-numeric characters
-  return parseFloat(priceString.replace(/[^\d.]/g, ''));
+
+  const match = priceString.replaceAll(',', '').match(/\d+(?:\.\d+)?/);
+  if (!match) {
+    throw new Error(`Unable to parse price: ${priceString}`);
+  }
+
+  return Number(match[0]);
 }
 
-// Read the entire file
-let content = fs.readFileSync(pricingDataPath, 'utf8');
+async function fetchRates() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000);
 
-// This is a hacky way to "evaluate" the arrays in the file.
-// It relies on the structure being consistent.
-// It extracts the array definitions, then uses the Function constructor
-// to turn them into actual JavaScript objects.
-const pricingDataString = /export const pricingData = (\[[\s\S]*?\]);/.exec(content)[1];
-const iphone17PricingDataString = /export const iphone17PricingData = (\[[\s\S]*?\]);/.exec(content)[1];
+  try {
+    const response = await fetch(ratesUrl, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`Exchange-rate request failed with HTTP ${response.status}`);
+    }
 
-const pricingData = new Function(`return ${pricingDataString}`)();
-const iphone17PricingData = new Function(`return ${iphone17PricingDataString}`)();
+    const payload = await response.json();
+    if (payload.result !== 'success' || payload.base_code !== 'CNY' || !payload.rates) {
+      throw new Error('Exchange-rate response is invalid');
+    }
 
-// Update iCloud pricing
-const updatedPricingData = pricingData.map(countryData => {
-  const newPlans = {};
-  for (const plan in countryData.plans) {
-    const price = getPrice(countryData.plans[plan].price);
-    const rate = rates[countryData.currency];
-    if (rate) {
-        newPlans[plan] = {
-            ...countryData.plans[plan],
-            cny: parseFloat((price * rate).toFixed(2)),
-        };
-    } else {
-        newPlans[plan] = countryData.plans[plan];
+    return payload;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function cnyRateFor(currency, rates) {
+  if (currency === 'CNY') return 1;
+
+  const foreignCurrencyPerCny = rates[currency];
+  if (!foreignCurrencyPerCny) {
+    throw new Error(`Missing exchange rate for ${currency}`);
+  }
+
+  return 1 / foreignCurrencyPerCny;
+}
+
+function updateIcloudPrices(pricingData, rates) {
+  for (const countryData of pricingData) {
+    const rate = cnyRateFor(countryData.currency, rates);
+    for (const planData of Object.values(countryData.plans)) {
+      planData.cny = Number((getPrice(planData.price) * rate).toFixed(2));
+      planData.best = false;
     }
   }
-  return { ...countryData, plans: newPlans };
-});
 
-// Update iPhone 17 pricing
-const updatedIphone17PricingData = iphone17PricingData.map(countryData => {
-  const newModels = {};
-  for (const model in countryData.models) {
-    newModels[model] = {};
-    for (const storage in countryData.models[model]) {
-      const price = getPrice(countryData.models[model][storage].price);
-      const rate = rates[countryData.currency];
-      if (rate) {
-          newModels[model][storage] = {
-            ...countryData.models[model][storage],
-            cny: Math.round(price * rate),
-          };
-      } else {
-          newModels[model][storage] = countryData.models[model][storage];
+  const plans = Object.keys(pricingData[0].plans);
+  for (const plan of plans) {
+    const minimum = Math.min(...pricingData.map((row) => row.plans[plan].cny));
+    for (const row of pricingData) {
+      row.plans[plan].best = row.plans[plan].cny === minimum;
+    }
+  }
+}
+
+function updateIphonePrices(iphoneData, rates) {
+  const modelStoragePairs = new Set();
+
+  for (const countryData of iphoneData) {
+    const rate = cnyRateFor(countryData.currency, rates);
+    for (const [model, storageOptions] of Object.entries(countryData.models)) {
+      for (const [storage, item] of Object.entries(storageOptions)) {
+        item.cny = Math.round(getPrice(item.price) * rate);
+        item.best = false;
+        modelStoragePairs.add(`${model}\u0000${storage}`);
       }
     }
   }
-  return { ...countryData, models: newModels };
-});
 
+  for (const pair of modelStoragePairs) {
+    const [model, storage] = pair.split('\u0000');
+    const matchingItems = iphoneData
+      .map((row) => row.models[model]?.[storage])
+      .filter(Boolean);
+    const minimum = Math.min(...matchingItems.map((item) => item.cny));
 
-// The following function is a hack to format the JS object back to a string
-// that resembles the original file's formatting. It's not perfect.
-function formatObject(obj) {
-  let str = JSON.stringify(obj, (key, value) => {
-    if (key === 'best' || key === 'price' || key === 'cny' || key === 'currency' || key === 'country') {
-      return value;
+    for (const item of matchingItems) {
+      item.best = item.cny === minimum;
     }
-    return value;
-  }, 2);
-
-  // Convert JSON string to look more like a JS object literal
-  str = str.replace(/"([^"]+)":/g, '$1:'); // Remove quotes from keys
-  str = str.replace(/"/g, "'"); // Replace double quotes with single quotes
-
-  return str;
+  }
 }
 
-// Replace the old data structures with the new, updated ones.
-content = content.replace(pricingDataString, formatObject(updatedPricingData));
-content = content.replace(iphone17PricingDataString, formatObject(updatedIphone17PricingData));
+function collectPriceItems(value, result = []) {
+  if (!value || typeof value !== 'object') return result;
 
+  if ('price' in value && 'cny' in value && 'best' in value) {
+    result.push(value);
+    return result;
+  }
 
-// Write the updated content back to the file
-fs.writeFileSync(pricingDataPath, content, 'utf8');
+  for (const child of Object.values(value)) {
+    collectPriceItems(child, result);
+  }
 
-console.log('pricingData.js has been updated with the latest exchange rates.');
+  return result;
+}
+
+function patchCalculatedFields(arraySource, data) {
+  const items = collectPriceItems(data);
+  let cnyIndex = 0;
+  let bestIndex = 0;
+
+  const withCny = arraySource.replace(/\bcny:\s*-?\d+(?:\.\d+)?/g, () => {
+    const item = items[cnyIndex++];
+    if (!item) throw new Error('Found more cny fields than price items');
+    return `cny: ${item.cny}`;
+  });
+
+  const withBest = withCny.replace(/\bbest:\s*(?:true|false)/g, () => {
+    const item = items[bestIndex++];
+    if (!item) throw new Error('Found more best fields than price items');
+    return `best: ${item.best}`;
+  });
+
+  if (cnyIndex !== items.length || bestIndex !== items.length) {
+    throw new Error(
+      `Calculated-field count mismatch: ${items.length} items, ${cnyIndex} cny fields, ${bestIndex} best fields`
+    );
+  }
+
+  return withBest;
+}
+
+async function main() {
+  let content = fs.readFileSync(pricingDataPath, 'utf8');
+  const pricingMatch = /export const pricingData = (\[[\s\S]*?\]);/.exec(content);
+  const iphoneMatch = /export const iphone17PricingData = (\[[\s\S]*?\]);/.exec(content);
+
+  if (!pricingMatch || !iphoneMatch) {
+    throw new Error('Unable to locate pricing data exports');
+  }
+
+  const pricingData = new Function(`return ${pricingMatch[1]}`)();
+  const iphone17PricingData = new Function(`return ${iphoneMatch[1]}`)();
+  const ratePayload = await fetchRates();
+
+  updateIcloudPrices(pricingData, ratePayload.rates);
+  updateIphonePrices(iphone17PricingData, ratePayload.rates);
+
+  content = content.replace(
+    pricingMatch[1],
+    patchCalculatedFields(pricingMatch[1], pricingData)
+  );
+  content = content.replace(
+    iphoneMatch[1],
+    patchCalculatedFields(iphoneMatch[1], iphone17PricingData)
+  );
+
+  fs.writeFileSync(pricingDataPath, content, 'utf8');
+  console.log(`Updated prices using exchange rates from ${ratePayload.time_last_update_utc}.`);
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});

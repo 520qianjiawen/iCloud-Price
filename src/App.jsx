@@ -4,12 +4,13 @@ import PricingTable from './components/PricingTable';
 import Footer from './components/Footer';
 
 function App() {
-  // 默认展示 iCloud+ 价格页，用户可切换到 iPhone 17 价格
   const [showIphone17, setShowIphone17] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
-      <main className="container mx-auto px-4 py-8">
+    <div className="relative min-h-screen overflow-hidden bg-[#050b16] text-slate-200">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(circle_at_20%_10%,rgba(56,189,248,0.13),transparent_35%),radial-gradient(circle_at_80%_5%,rgba(99,102,241,0.12),transparent_32%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500/5 blur-3xl" />
+      <main className="relative mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
         <Header showIphone17={showIphone17} />
         <PricingTable showIphone17={showIphone17} setShowIphone17={setShowIphone17} />
         <Footer />

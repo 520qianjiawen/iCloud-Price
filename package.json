@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update:prices": "node update_prices.js"
   },
   "dependencies": {
     "react": "^18.2.0",
