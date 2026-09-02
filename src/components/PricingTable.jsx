@@ -93,16 +93,6 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
     visibleIphoneData.some((row) => row.models[modelKey]?.[storage])
   );
 
-  const requestSort = (plan) => {
-    if (plan === activePlan) {
-      setSortDirection((current) => current === 'ascending' ? 'descending' : 'ascending');
-      return;
-    }
-
-    setActivePlan(plan);
-    setSortDirection('ascending');
-  };
-
   const switchProduct = (iphoneMode) => {
     setShowIphone17(iphoneMode);
     setQuery('');
@@ -175,7 +165,7 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
         <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0">
             <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600">
-              {showIphone17 ? '选择机型' : '选择容量并排序'}
+              {showIphone17 ? '选择机型' : '选择容量'}
             </p>
             <div className="no-scrollbar overflow-x-auto">
               <div className="flex min-w-max gap-2 pb-1">
@@ -185,7 +175,7 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                     <button
                       type="button"
                       key={item}
-                      onClick={() => showIphone17 ? setActiveModel(item) : requestSort(item)}
+                      onClick={() => showIphone17 ? setActiveModel(item) : setActivePlan(item)}
                       aria-pressed={isActive}
                       className={`inline-flex min-w-[4.5rem] items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-sky-400/50 ${
                         isActive
@@ -194,7 +184,6 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
                       }`}
                     >
                       {item}
-                      {!showIphone17 && <SortIcon active={isActive} direction={sortDirection} />}
                     </button>
                   );
                 })}
@@ -354,6 +343,39 @@ const PricingTable = ({ showIphone17, setShowIphone17 }) => {
             </div>
           </>
         ) : <EmptyState query={query} />
+      )}
+
+      {!showIphone17 && (
+        <div className="border-t border-white/[0.07] p-4 sm:p-6">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600">价格排序</p>
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'ascending', label: '从低到高' },
+              { id: 'descending', label: '从高到低' },
+            ].map((option) => {
+              const isActive = sortDirection === option.id;
+              return (
+                <button
+                  type="button"
+                  key={option.id}
+                  onClick={() => setSortDirection(option.id)}
+                  aria-pressed={isActive}
+                  className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-sky-400/50 ${
+                    isActive
+                      ? 'border-sky-300/30 bg-sky-400/15 text-sky-100 shadow-[0_0_20px_rgba(56,189,248,0.08)]'
+                      : 'border-white/[0.07] bg-white/[0.03] text-slate-500 hover:border-white/15 hover:text-slate-200'
+                  }`}
+                >
+                  {option.label}
+                  <SortIcon active={isActive} direction={option.id} />
+                </button>
+              );
+            })}
+            <p className="ml-auto text-xs text-slate-600">
+              按 {activePlan} 排序
+            </p>
+          </div>
+        </div>
       )}
     </section>
   );
