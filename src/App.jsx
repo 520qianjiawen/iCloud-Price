@@ -44,34 +44,41 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Dynamic SEO Meta tags for each product
+  // Dynamic SEO Meta tags and document.title for each product
   useEffect(() => {
     const seoMetaMap = {
       iphone18: {
-        description: '全面对比 iPhone 18 Pro 与 iPhone 18 Pro Max 在中国大陆、中国香港、中国台湾、日本、美国等全球各地区的官方售价与实时汇率折算，提供国行差价对比与最低价排行。',
-        ogTitle: 'iPhone 18 Pro 全球官方售价与汇率比价地图 - Neutemu',
-        ogUrl: 'https://icloud.neutemu.com/?product=iphone18',
+        title: 'iPhone 18 Pro / Max 全球价格地图 | 官方售价与国行比价 - Neutemu',
+        description: '实时对比 iPhone 18 Pro 与 iPhone 18 Pro Max 在中国大陆、中国香港、中国台湾、日本、美国等全球 11 个地区的官方售价与汇率折算，提供国行差价对比与最低价排行。',
+        ogTitle: 'iPhone 18 Pro / Max 全球官方售价与汇率比价地图 - Neutemu',
+        canonicalUrl: 'https://icloud.neutemu.com/?product=iphone18',
       },
       iphoneduo: {
+        title: 'iPhone Duo 折叠屏全球价格地图 | 首款折叠屏售价与比价 - Neutemu',
         description: '全面对比苹果首款折叠屏手机 iPhone Duo 在中国大陆、中国香港、中国台湾、日本、美国等全球各地区的官方售价与实时汇率折算，提供国行差价对比与最低价排行。',
         ogTitle: 'iPhone Duo 折叠屏手机全球官方售价与汇率比价地图 - Neutemu',
-        ogUrl: 'https://icloud.neutemu.com/?product=iphoneduo',
+        canonicalUrl: 'https://icloud.neutemu.com/?product=iphoneduo',
       },
       iphone17: {
+        title: 'iPhone 17 全球价格地图 | 17 / Air / Pro / Pro Max 官方售价 - Neutemu',
         description: '全面对比 iPhone 17、iPhone 17 Air、17 Pro 及 17 Pro Max 在全球各国家/地区的官方售价，支持实时汇率与税费换算，快速锁定最划算的购买方案。',
         ogTitle: 'iPhone 17 全球官方售价与汇率比价地图 - Neutemu',
-        ogUrl: 'https://icloud.neutemu.com/?product=iphone17',
+        canonicalUrl: 'https://icloud.neutemu.com/?product=iphone17',
       },
       icloud: {
-        description: '全面对比 iCloud+ 在全球不同国家与地区的官方订阅月费，支持 50GB 至 12TB 容量梯度与实时汇率折算，快速找到全球最高性价比的订阅方案。',
+        title: 'iCloud+ 全球订阅价格对比地图 | 各国月费与汇率换算 - Neutemu',
+        description: '全面对比全球 41 个地区 iCloud+ 官方订阅月费，涵盖 50GB 至 12TB 全部档位与实时汇率折算，快速锁定高性价比方案。',
         ogTitle: 'iCloud+ 全球订阅价格对比地图 - Neutemu',
-        ogUrl: 'https://icloud.neutemu.com/',
+        canonicalUrl: 'https://icloud.neutemu.com/',
       },
     };
 
     const currentSeo = seoMetaMap[currentProduct] || seoMetaMap.icloud;
 
-    // Update meta description
+    // Dynamically update document.title
+    document.title = currentSeo.title;
+
+    // Dynamically update meta description & social cards
     try {
       let metaDesc = document.querySelector('meta[name="description"]');
       if (!metaDesc) {
@@ -91,9 +98,38 @@ function App() {
         el.content = content;
       };
 
+      const setMetaName = (name, content) => {
+        let el = document.querySelector(`meta[name="${name}"]`);
+        if (!el) {
+          el = document.createElement('meta');
+          el.name = name;
+          document.head.appendChild(el);
+        }
+        el.content = content;
+      };
+
+      const featuredImgUrl = 'https://icloud.neutemu.com/featured-image.webp';
+
       setMetaProp('og:title', currentSeo.ogTitle);
       setMetaProp('og:description', currentSeo.description);
-      setMetaProp('og:url', currentSeo.ogUrl);
+      setMetaProp('og:url', currentSeo.canonicalUrl);
+      setMetaProp('og:image', featuredImgUrl);
+      setMetaProp('og:type', 'website');
+      setMetaProp('og:site_name', 'Neutemu Price Atlas');
+
+      setMetaName('twitter:card', 'summary_large_image');
+      setMetaName('twitter:title', currentSeo.ogTitle);
+      setMetaName('twitter:description', currentSeo.description);
+      setMetaName('twitter:image', featuredImgUrl);
+
+      // Canonical link tag
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.href = currentSeo.canonicalUrl;
     } catch (e) {
       // ignore
     }
