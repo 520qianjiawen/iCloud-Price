@@ -108,12 +108,18 @@ function App() {
         el.content = content;
       };
 
-      const featuredImgUrl = 'https://icloud.neutemu.com/featured-image.webp';
+      const featuredImgUrl = 'https://icloud.neutemu.com/iPhone%E5%85%A8%E7%90%83%E4%BB%B7%E6%A0%BC%E5%AF%B9%E6%AF%94.webp';
+      const featuredImgAlt = 'iPhone全球价格对比';
 
       setMetaProp('og:title', currentSeo.ogTitle);
       setMetaProp('og:description', currentSeo.description);
       setMetaProp('og:url', currentSeo.canonicalUrl);
       setMetaProp('og:image', featuredImgUrl);
+      setMetaProp('og:image:secure_url', featuredImgUrl);
+      setMetaProp('og:image:type', 'image/webp');
+      setMetaProp('og:image:width', '1440');
+      setMetaProp('og:image:height', '960');
+      setMetaProp('og:image:alt', featuredImgAlt);
       setMetaProp('og:type', 'website');
       setMetaProp('og:site_name', 'Neutemu Price Atlas');
 
@@ -121,6 +127,7 @@ function App() {
       setMetaName('twitter:title', currentSeo.ogTitle);
       setMetaName('twitter:description', currentSeo.description);
       setMetaName('twitter:image', featuredImgUrl);
+      setMetaName('twitter:image:alt', featuredImgAlt);
 
       // Canonical link tag
       let canonicalLink = document.querySelector('link[rel="canonical"]');
