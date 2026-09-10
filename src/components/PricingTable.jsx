@@ -1,5 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { pricingData, iphone17PricingData, iphone18PricingData } from '../data/pricingData';
+import {
+  pricingData,
+  iphone17PricingData,
+  iphone18PricingData,
+  iphoneDuoPricingData,
+} from '../data/pricingData';
 
 const plans = ['50GB', '200GB', '2TB', '6TB', '12TB'];
 const iphoneStorages = ['256G', '512G', '1TB', '2TB'];
@@ -8,6 +13,11 @@ const iphone18ModelChips = ['18 Pro', '18 Pro Max'];
 const iphone18DisplayToKey = {
   '18 Pro': '18 Pro',
   '18 Pro Max': '18 Pro Max',
+};
+
+const iphoneDuoModelChips = ['iPhone Duo'];
+const iphoneDuoDisplayToKey = {
+  'iPhone Duo': 'Duo',
 };
 
 const iphone17ModelChips = ['17', '17 Air', '17 Pro', '17 Pro Max'];
@@ -125,22 +135,38 @@ const PricingTable = ({
   };
 
   const isIphone18 = currentProduct === 'iphone18';
+  const isIphoneDuo = currentProduct === 'iphoneduo';
   const isIphone17 = currentProduct === 'iphone17';
-  const isIphone = isIphone18 || isIphone17;
+  const isIphone = isIphone18 || isIphoneDuo || isIphone17;
 
   const [activePlan, setActivePlan] = useState('50GB');
   const [activeIphone18Model, setActiveIphone18Model] = useState('18 Pro');
+  const [activeIphoneDuoModel, setActiveIphoneDuoModel] = useState('iPhone Duo');
   const [activeIphone17Model, setActiveIphone17Model] = useState('17');
   const [sortDirection, setSortDirection] = useState('ascending');
   const [query, setQuery] = useState('');
 
   const normalizedQuery = query.trim().toLocaleLowerCase();
 
-  const currentIphoneData = isIphone18 ? iphone18PricingData : iphone17PricingData;
-  const currentModelChips = isIphone18 ? iphone18ModelChips : iphone17ModelChips;
-  const activeModel = isIphone18 ? activeIphone18Model : activeIphone17Model;
-  const setActiveModel = isIphone18 ? setActiveIphone18Model : setActiveIphone17Model;
-  const modelKey = (isIphone18 ? iphone18DisplayToKey : iphone17DisplayToKey)[activeModel] || activeModel;
+  let currentIphoneData = iphone18PricingData;
+  let currentModelChips = iphone18ModelChips;
+  let activeModel = activeIphone18Model;
+  let setActiveModel = setActiveIphone18Model;
+  let modelKey = iphone18DisplayToKey[activeModel] || activeModel;
+
+  if (isIphoneDuo) {
+    currentIphoneData = iphoneDuoPricingData;
+    currentModelChips = iphoneDuoModelChips;
+    activeModel = activeIphoneDuoModel;
+    setActiveModel = setActiveIphoneDuoModel;
+    modelKey = iphoneDuoDisplayToKey[activeModel] || 'Duo';
+  } else if (isIphone17) {
+    currentIphoneData = iphone17PricingData;
+    currentModelChips = iphone17ModelChips;
+    activeModel = activeIphone17Model;
+    setActiveModel = setActiveIphone17Model;
+    modelKey = iphone17DisplayToKey[activeModel] || activeModel;
+  }
 
   // iCloud Min Price by Plan
   const minPriceByPlan = useMemo(() => (
@@ -283,14 +309,14 @@ const PricingTable = ({
       {/* Top Controls Toolbar */}
       <div className="border-b border-slate-200/60 p-5 dark:border-white/[0.08] sm:p-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          {/* 3-Way Segmented Product Tabs */}
-          <div className="grid grid-cols-3 rounded-2xl border border-slate-200/80 bg-slate-100/90 p-1.5 shadow-inner backdrop-blur-md dark:border-white/10 dark:bg-black/30 sm:w-fit">
+          {/* 4-Way Segmented Product Tabs */}
+          <div className="grid grid-cols-2 gap-1 rounded-2xl border border-slate-200/80 bg-slate-100/90 p-1.5 shadow-inner backdrop-blur-md dark:border-white/10 dark:bg-black/30 sm:grid-cols-4 sm:w-fit">
             {/* Tab: iCloud+ */}
             <button
               type="button"
               onClick={() => switchProduct('icloud')}
               aria-pressed={currentProduct === 'icloud'}
-              className={`inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-5 sm:text-sm ${
+              className={`inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-4 sm:text-sm ${
                 currentProduct === 'icloud'
                   ? 'bg-white text-slate-900 shadow-md shadow-slate-200/50 dark:bg-slate-800 dark:text-white dark:shadow-slate-950/40'
                   : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
@@ -307,7 +333,7 @@ const PricingTable = ({
               type="button"
               onClick={() => switchProduct('iphone18')}
               aria-pressed={currentProduct === 'iphone18'}
-              className={`relative inline-flex items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-5 sm:text-sm ${
+              className={`relative inline-flex items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-4 sm:text-sm ${
                 currentProduct === 'iphone18'
                   ? 'bg-white text-slate-900 shadow-md shadow-slate-200/50 dark:bg-slate-800 dark:text-white dark:shadow-slate-950/40'
                   : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
@@ -316,9 +342,29 @@ const PricingTable = ({
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-sky-500 dark:text-sky-400">
                 <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clipRule="evenodd" />
               </svg>
-              <span>iPhone 18 Pro</span>
-              <span className="hidden rounded-full bg-sky-500/15 px-1.5 py-0.2 text-[9px] font-extrabold uppercase text-sky-600 dark:bg-sky-400/20 dark:text-sky-300 sm:inline">
+              <span>18 Pro</span>
+              <span className="hidden rounded-full bg-sky-500/15 px-1.5 py-0.2 text-[9px] font-extrabold uppercase text-sky-600 dark:bg-sky-400/20 dark:text-sky-300 md:inline">
                 NEW
+              </span>
+            </button>
+
+            {/* Tab: iPhone Duo */}
+            <button
+              type="button"
+              onClick={() => switchProduct('iphoneduo')}
+              aria-pressed={currentProduct === 'iphoneduo'}
+              className={`relative inline-flex items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-4 sm:text-sm ${
+                currentProduct === 'iphoneduo'
+                  ? 'bg-white text-slate-900 shadow-md shadow-slate-200/50 dark:bg-slate-800 dark:text-white dark:shadow-slate-950/40'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-indigo-500 dark:text-indigo-400">
+                <path d="M5.5 3A2.5 2.5 0 003 5.5v9A2.5 2.5 0 005.5 17h4a.5.5 0 00.5-.5V3.5a.5.5 0 00-.5-.5h-4zM10.5 3a.5.5 0 00-.5.5v13a.5.5 0 00.5.5h4a2.5 2.5 0 002.5-2.5v-9A2.5 2.5 0 0014.5 3h-4z" />
+              </svg>
+              <span>iPhone Duo</span>
+              <span className="hidden rounded-full bg-indigo-500/15 px-1.5 py-0.2 text-[9px] font-extrabold uppercase text-indigo-600 dark:bg-indigo-400/20 dark:text-indigo-300 md:inline">
+                折叠
               </span>
             </button>
 
@@ -327,7 +373,7 @@ const PricingTable = ({
               type="button"
               onClick={() => switchProduct('iphone17')}
               aria-pressed={currentProduct === 'iphone17'}
-              className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-5 sm:text-sm ${
+              className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-200 sm:px-4 sm:text-sm ${
                 currentProduct === 'iphone17'
                   ? 'bg-white text-slate-900 shadow-md shadow-slate-200/50 dark:bg-slate-800 dark:text-white dark:shadow-slate-950/40'
                   : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
@@ -351,7 +397,7 @@ const PricingTable = ({
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="搜索地区（如 香港、日本）或货币…"
+                placeholder="搜索地区（如 中国香港、日本）或货币…"
                 className="w-full rounded-2xl border border-slate-200/90 bg-white/90 py-2.5 pl-10 pr-9 text-sm text-slate-900 shadow-inner outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-sky-500/50 focus:ring-4 focus:ring-sky-500/10 dark:border-white/10 dark:bg-black/30 dark:text-white dark:placeholder:text-slate-500 dark:hover:border-white/20 dark:focus:border-sky-400/40 dark:focus:ring-sky-400/10"
               />
             </label>

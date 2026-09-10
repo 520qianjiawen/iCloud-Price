@@ -4,8 +4,9 @@ import ThemeToggle from './ThemeToggle';
 const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setTheme }) => {
   const activeMode = currentProduct ?? (showIphone17 ? 'iphone17' : 'icloud');
   const isIphone18 = activeMode === 'iphone18';
+  const isIphoneDuo = activeMode === 'iphoneduo';
   const isIphone17 = activeMode === 'iphone17';
-  const isIphone = isIphone18 || isIphone17;
+  const isIphone = isIphone18 || isIphoneDuo || isIphone17;
 
   let title = 'iCloud+ 全球价格地图';
   let desc = '对比全球各地区官方订阅月费，按实时汇率折算人民币，快速锁定高性价比方案。';
@@ -19,6 +20,12 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
     regionCount = '11';
     tierCount = '2';
     tierLabel = '机型系列';
+  } else if (isIphoneDuo) {
+    title = 'iPhone Duo 全球价格地图';
+    desc = '苹果首款横向书本折叠屏旗舰，多国家/地区官方售价比对与实时人民币折算。';
+    regionCount = '11';
+    tierCount = '4';
+    tierLabel = '容量档位';
   } else if (isIphone17) {
     title = 'iPhone 17 全球价格地图';
     desc = '一览 iPhone 17 全系全球官方售价、容量版本与人民币实时折算比价。';
@@ -95,6 +102,18 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
             <div>
               <span className="font-bold text-amber-900 dark:text-amber-100">购机版本提示：</span>
               iPhone 18 Pro 与 18 Pro Max 的美国等部分地区版本仅支持 eSIM；中国大陆版本支持双实体 nano-SIM 卡，不支持 eSIM。海外购机请提前确认国内运营商频段兼容与联保政策。
+            </div>
+          </div>
+        )}
+
+        {isIphoneDuo && (
+          <div className="mx-auto mt-6 flex max-w-3xl items-start gap-3 rounded-2xl border border-sky-500/25 bg-sky-50/70 p-4 text-left text-xs leading-relaxed text-sky-950 shadow-sm backdrop-blur-md dark:border-sky-400/20 dark:bg-sky-400/[0.08] dark:text-sky-200 sm:text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 shrink-0 text-sky-600 dark:text-sky-300">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <span className="font-bold text-sky-950 dark:text-sky-100">折叠屏首发提示：</span>
+              iPhone Duo 为苹果首款横向书本折叠屏手机，配备 5.4 英寸外屏与 7.6 英寸可折叠内屏。中国大陆版本支持双实体 nano-SIM 卡；部分海外版本仅支持 eSIM。首批预购将于 10 月 16 日开启，10 月 23 日正式发售。
             </div>
           </div>
         )}

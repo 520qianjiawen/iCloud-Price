@@ -142,19 +142,22 @@ async function main() {
   const pricingMatch = /export const pricingData = (\[[\s\S]*?\]);/.exec(content);
   const iphoneMatch = /export const iphone17PricingData = (\[[\s\S]*?\]);/.exec(content);
   const iphone18Match = /export const iphone18PricingData = (\[[\s\S]*?\]);/.exec(content);
+  const iphoneDuoMatch = /export const iphoneDuoPricingData = (\[[\s\S]*?\]);/.exec(content);
 
-  if (!pricingMatch || !iphoneMatch || !iphone18Match) {
+  if (!pricingMatch || !iphoneMatch || !iphone18Match || !iphoneDuoMatch) {
     throw new Error('Unable to locate pricing data exports');
   }
 
   const pricingData = new Function(`return ${pricingMatch[1]}`)();
   const iphone17PricingData = new Function(`return ${iphoneMatch[1]}`)();
   const iphone18PricingData = new Function(`return ${iphone18Match[1]}`)();
+  const iphoneDuoPricingData = new Function(`return ${iphoneDuoMatch[1]}`)();
   const ratePayload = await fetchRates();
 
   updateIcloudPrices(pricingData, ratePayload.rates);
   updateIphonePrices(iphone17PricingData, ratePayload.rates);
   updateIphonePrices(iphone18PricingData, ratePayload.rates);
+  updateIphonePrices(iphoneDuoPricingData, ratePayload.rates);
 
   content = content.replace(
     pricingMatch[1],
@@ -167,6 +170,10 @@ async function main() {
   content = content.replace(
     iphone18Match[1],
     patchCalculatedFields(iphone18Match[1], iphone18PricingData)
+  );
+  content = content.replace(
+    iphoneDuoMatch[1],
+    patchCalculatedFields(iphoneDuoMatch[1], iphoneDuoPricingData)
   );
 
   fs.writeFileSync(pricingDataPath, content, 'utf8');

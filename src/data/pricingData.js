@@ -187,7 +187,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇹🇼 台湾',
+    country: '🇨🇳 中国台湾',
     currency: 'TWD',
     plans: {
       '50GB': { price: '30 TWD', cny: 6.39, best: false },
@@ -253,7 +253,7 @@ export const pricingData = [
     }
   },
   {
-    country: '🇭🇰 香港',
+    country: '🇨🇳 中国香港',
     currency: 'HKD',
     plans: {
       '50GB': { price: '8 HKD', cny: 6.86, best: false },
@@ -456,7 +456,7 @@ export const pricingData = [
 // Data shape mirrors pricingData but nests by model -> storage for clarity
 export const iphone17PricingData = [
   {
-    country: '🇹🇼 台湾',
+    country: '🇨🇳 中国台湾',
     currency: 'TWD',
     models: {
       '17': {
@@ -586,7 +586,7 @@ export const iphone17PricingData = [
     }
   },
   {
-    country: '🇭🇰 香港',
+    country: '🇨🇳 中国香港',
     currency: 'HKD',
     models: {
       '17': {
@@ -757,7 +757,7 @@ export const iphone17Columns = [
 // iPhone 18 Pro Global Price Comparison
 export const iphone18PricingData = [
   {
-    country: '🇹🇼 台湾',
+    country: '🇨🇳 中国台湾',
     currency: 'TWD',
     models: {
       '18 Pro': {
@@ -847,7 +847,7 @@ export const iphone18PricingData = [
     }
   },
   {
-    country: '🇭🇰 香港',
+    country: '🇨🇳 中国香港',
     currency: 'HKD',
     models: {
       '18 Pro': {
@@ -962,4 +962,146 @@ export const iphone18Columns = [
   { key: 'currency', label: 'Currency' },
   { key: '18 Pro', label: '18 Pro' },
   { key: '18 Pro Max', label: '18 Pro Max' },
+];
+
+// iPhone Duo Global Price Comparison
+export const iphoneDuoPricingData = [
+  {
+    country: '🇨🇳 中国台湾',
+    currency: 'TWD',
+    models: {
+      'Duo': {
+        '256G':   { price: 'NT$74,900', cny: 15961, best: false },
+        '512G':   { price: 'NT$81,900', cny: 17453, best: false },
+        '1TB':    { price: 'NT$96,900', cny: 20649, best: false },
+        '2TB':    { price: 'NT$118,900', cny: 25338, best: false },
+      },
+    }
+  },
+  {
+    country: '🇯🇵 日本',
+    currency: 'JPY',
+    models: {
+      'Duo': {
+        '256G':   { price: '¥364,800', cny: 15967, best: false },
+        '512G':   { price: '¥399,800', cny: 17499, best: false },
+        '1TB':    { price: '¥469,800', cny: 20563, best: false },
+        '2TB':    { price: '¥574,800', cny: 25159, best: false },
+      },
+    }
+  },
+  {
+    country: '🇯🇵 日本（免税）',
+    currency: 'JPY',
+    models: {
+      'Duo': {
+        '256G':   { price: '¥331,636', cny: 14516, best: false },
+        '512G':   { price: '¥363,455', cny: 15908, best: false },
+        '1TB':    { price: '¥427,091', cny: 18694, best: false },
+        '2TB':    { price: '¥522,545', cny: 22872, best: false },
+      },
+    }
+  },
+  {
+    country: '🇰🇷 韩国',
+    currency: 'KRW',
+    models: {
+      'Duo': {
+        '256G':   { price: '₩3,290,000', cny: 16470, best: false },
+        '512G':   { price: '₩3,590,000', cny: 17972, best: false },
+        '1TB':    { price: '₩4,190,000', cny: 20975, best: false },
+        '2TB':    { price: '₩5,090,000', cny: 25481, best: false },
+      },
+    }
+  },
+  {
+    country: '🇹🇭 泰国',
+    currency: 'THB',
+    models: {
+      'Duo': {
+        '256G':   { price: '฿79,900', cny: 16341, best: false },
+        '512G':   { price: '฿87,900', cny: 17978, best: false },
+        '1TB':    { price: '฿103,900', cny: 21250, best: false },
+        '2TB':    { price: '฿127,900', cny: 26158, best: false },
+      },
+    }
+  },
+  {
+    country: '🇨🇳 中国香港',
+    currency: 'HKD',
+    models: {
+      'Duo': {
+        '256G':   { price: 'HK$17,499', cny: 15008, best: false },
+        '512G':   { price: 'HK$19,299', cny: 16552, best: false },
+        '1TB':    { price: 'HK$22,799', cny: 19553, best: false },
+        '2TB':    { price: 'HK$27,999', cny: 24013, best: false },
+      },
+    }
+  },
+  {
+    country: '🇺🇸 美国',
+    currency: 'USD',
+    models: {
+      'Duo': {
+        '256G':   { price: '$1,999', cny: 13444, best: true },
+        '512G':   { price: '$2,199', cny: 14789, best: true },
+        '1TB':    { price: '$2,599', cny: 17479, best: true },
+        '2TB':    { price: '$3,199', cny: 21515, best: true },
+      },
+    }
+  },
+  {
+    country: '🇨🇦 加拿大',
+    currency: 'CAD',
+    models: {
+      'Duo': {
+        '256G':   { price: 'C$2,999', cny: 14614, best: false },
+        '512G':   { price: 'C$3,299', cny: 16076, best: false },
+        '1TB':    { price: 'C$3,899', cny: 19000, best: false },
+        '2TB':    { price: 'C$4,799', cny: 23385, best: false },
+      },
+    }
+  },
+  {
+    country: '🇦🇺 澳大利亚',
+    currency: 'AUD',
+    models: {
+      'Duo': {
+        '256G':   { price: 'A$3,499', cny: 16958, best: false },
+        '512G':   { price: 'A$3,899', cny: 18897, best: false },
+        '1TB':    { price: 'A$4,699', cny: 22774, best: false },
+        '2TB':    { price: 'A$5,899', cny: 28590, best: false },
+      },
+    }
+  },
+  {
+    country: '🇸🇬 新加坡',
+    currency: 'SGD',
+    models: {
+      'Duo': {
+        '256G':   { price: 'S$3,099', cny: 16486, best: false },
+        '512G':   { price: 'S$3,399', cny: 18082, best: false },
+        '1TB':    { price: 'S$3,999', cny: 21274, best: false },
+        '2TB':    { price: 'S$4,899', cny: 26062, best: false },
+      },
+    }
+  },
+  {
+    country: '🇨🇳 中国大陆',
+    currency: 'CNY',
+    models: {
+      'Duo': {
+        '256G':   { price: '¥15,999', cny: 15999, best: false },
+        '512G':   { price: '¥17,999', cny: 17999, best: false },
+        '1TB':    { price: '¥21,499', cny: 21499, best: false },
+        '2TB':    { price: '¥26,499', cny: 26499, best: false },
+      },
+    }
+  },
+];
+
+export const iphoneDuoColumns = [
+  { key: 'country', label: 'Country/Region' },
+  { key: 'currency', label: 'Currency' },
+  { key: 'Duo', label: 'iPhone Duo' },
 ];
