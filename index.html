@@ -6,6 +6,17 @@
     <meta name="description" content="全面对比 iCloud+ 在不同国家/地区的订阅月费与 iPhone 17 全球定价，支持容量梯度、汇率与税费换算，帮助你快速找到最划算的购买与订阅方案。" />
     <title>iCloud+ 价格对比与 iPhone 17 全球定价 | 各国/地区月费与售价一览</title>
     <link rel="icon" type="image/svg+xml" href="/ICloud_logo.svg" />
+    <script>
+      try {
+        const saved = localStorage.getItem('theme-preference');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark) || (saved === 'system' && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
