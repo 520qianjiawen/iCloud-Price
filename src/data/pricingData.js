@@ -741,6 +741,136 @@ export const iphone17PricingData = [
       }
     }
   },
+  {
+    country: "🇨🇳 中国澳门",
+    currency: "MOP",
+    models: {
+      "17": {
+        "256G": { price: "MOP$6,999", cny: 5828, best: false },
+        "512G": { price: "MOP$8,699", cny: 7243, best: false },
+      },
+      "Air": {
+        "256G": { price: "MOP$8,699", cny: 7243, best: false },
+        "512G": { price: "MOP$10,499", cny: 8742, best: false },
+        "1TB":  { price: "MOP$12,199", cny: 10158, best: false },
+      },
+      "17 Pro": {
+        "256G": { price: "MOP$8,879", cny: 7393, best: false },
+        "512G": { price: "MOP$10,699", cny: 8909, best: false },
+        "1TB":  { price: "MOP$12,499", cny: 10408, best: false },
+      },
+      "17 Pro Max": {
+        "256G": { price: "MOP$9,899", cny: 8243, best: false },
+        "512G": { price: "MOP$11,699", cny: 9741, best: false },
+        "1TB":  { price: "MOP$13,499", cny: 11240, best: false },
+        "2TB":  { price: "MOP$16,999", cny: 14155, best: false },
+      }
+    }
+  },
+  {
+    country: "🇦🇪 阿联酋",
+    currency: "AED",
+    models: {
+      "17": {
+        "256G": { price: "AED 3,399", cny: 6225, best: false },
+        "512G": { price: "AED 4,249", cny: 7781, best: false },
+      },
+      "Air": {
+        "256G": { price: "AED 4,299", cny: 7873, best: false },
+        "512G": { price: "AED 5,149", cny: 9429, best: false },
+        "1TB":  { price: "AED 5,999", cny: 10986, best: false },
+      },
+      "17 Pro": {
+        "256G": { price: "AED 4,299", cny: 7873, best: false },
+        "512G": { price: "AED 5,149", cny: 9429, best: false },
+        "1TB":  { price: "AED 5,999", cny: 10986, best: false },
+      },
+      "17 Pro Max": {
+        "256G": { price: "AED 5,099", cny: 9338, best: false },
+        "512G": { price: "AED 5,949", cny: 10895, best: false },
+        "1TB":  { price: "AED 6,799", cny: 12451, best: false },
+        "2TB":  { price: "AED 8,499", cny: 15564, best: false },
+      }
+    }
+  },
+  {
+    country: "🇲🇾 马来西亚",
+    currency: "MYR",
+    models: {
+      "17": {
+        "256G": { price: "RM 3,999", cny: 6650, best: false },
+        "512G": { price: "RM 4,999", cny: 8313, best: false },
+      },
+      "Air": {
+        "256G": { price: "RM 4,999", cny: 8313, best: false },
+        "512G": { price: "RM 5,999", cny: 9976, best: false },
+        "1TB":  { price: "RM 6,999", cny: 11639, best: false },
+      },
+      "17 Pro": {
+        "256G": { price: "RM 5,499", cny: 9144, best: false },
+        "512G": { price: "RM 6,499", cny: 10807, best: false },
+        "1TB":  { price: "RM 7,499", cny: 12470, best: false },
+      },
+      "17 Pro Max": {
+        "256G": { price: "RM 6,499", cny: 10807, best: false },
+        "512G": { price: "RM 7,499", cny: 12470, best: false },
+        "1TB":  { price: "RM 8,499", cny: 14133, best: false },
+        "2TB":  { price: "RM 10,499", cny: 17459, best: false },
+      }
+    }
+  },
+  {
+    country: "🇬🇧 英国",
+    currency: "GBP",
+    models: {
+      "17": {
+        "256G": { price: "£799", cny: 7272, best: false },
+        "512G": { price: "£999", cny: 9093, best: false },
+      },
+      "Air": {
+        "256G": { price: "£999", cny: 9093, best: false },
+        "512G": { price: "£1,199", cny: 10913, best: false },
+        "1TB":  { price: "£1,399", cny: 12733, best: false },
+      },
+      "17 Pro": {
+        "256G": { price: "£999", cny: 9093, best: false },
+        "512G": { price: "£1,199", cny: 10913, best: false },
+        "1TB":  { price: "£1,399", cny: 12733, best: false },
+      },
+      "17 Pro Max": {
+        "256G": { price: "£1,199", cny: 10913, best: false },
+        "512G": { price: "£1,399", cny: 12733, best: false },
+        "1TB":  { price: "£1,599", cny: 14554, best: false },
+        "2TB":  { price: "£1,999", cny: 18194, best: false },
+      }
+    }
+  },
+  {
+    country: "🇪🇺 德国",
+    currency: "EUR",
+    models: {
+      "17": {
+        "256G": { price: "€949", cny: 7418, best: false },
+        "512G": { price: "€1,199", cny: 9372, best: false },
+      },
+      "Air": {
+        "256G": { price: "€1,199", cny: 9372, best: false },
+        "512G": { price: "€1,449", cny: 11326, best: false },
+        "1TB":  { price: "€1,699", cny: 13280, best: false },
+      },
+      "17 Pro": {
+        "256G": { price: "€1,199", cny: 9372, best: false },
+        "512G": { price: "€1,449", cny: 11326, best: false },
+        "1TB":  { price: "€1,699", cny: 13280, best: false },
+      },
+      "17 Pro Max": {
+        "256G": { price: "€1,449", cny: 11326, best: false },
+        "512G": { price: "€1,699", cny: 13280, best: false },
+        "1TB":  { price: "€1,949", cny: 15235, best: false },
+        "2TB":  { price: "€2,449", cny: 19143, best: false },
+      }
+    }
+  },
 ];
 
 // Recommended column order for the iPhone 17 table UI
@@ -954,6 +1084,96 @@ export const iphone18PricingData = [
       },
     }
   },
+  {
+    country: "🇨🇳 中国澳门",
+    currency: "MOP",
+    models: {
+      "18 Pro": {
+        "256G": { price: "MOP$10,699", cny: 8909, best: false },
+        "512G": { price: "MOP$12,499", cny: 10408, best: false },
+        "1TB":  { price: "MOP$15,999", cny: 13322, best: false },
+        "2TB":  { price: "MOP$21,299", cny: 17735, best: false },
+      },
+      "18 Pro Max": {
+        "256G": { price: "MOP$11,699", cny: 9741, best: false },
+        "512G": { price: "MOP$13,499", cny: 11240, best: false },
+        "1TB":  { price: "MOP$16,999", cny: 14155, best: false },
+        "2TB":  { price: "MOP$22,299", cny: 18568, best: false },
+      },
+    }
+  },
+  {
+    country: "🇦🇪 阿联酋",
+    currency: "AED",
+    models: {
+      "18 Pro": {
+        "256G": { price: "AED 4,999", cny: 9155, best: false },
+        "512G": { price: "AED 5,849", cny: 10711, best: false },
+        "1TB":  { price: "AED 7,499", cny: 13733, best: false },
+        "2TB":  { price: "AED 9,999", cny: 18311, best: false },
+      },
+      "18 Pro Max": {
+        "256G": { price: "AED 5,499", cny: 10070, best: false },
+        "512G": { price: "AED 6,349", cny: 11627, best: false },
+        "1TB":  { price: "AED 7,999", cny: 14649, best: false },
+        "2TB":  { price: "AED 10,499", cny: 19227, best: false },
+      },
+    }
+  },
+  {
+    country: "🇲🇾 马来西亚",
+    currency: "MYR",
+    models: {
+      "18 Pro": {
+        "256G": { price: "RM 6,499", cny: 10807, best: false },
+        "512G": { price: "RM 7,499", cny: 12470, best: false },
+        "1TB":  { price: "RM 9,499", cny: 15796, best: false },
+        "2TB":  { price: "RM 12,499", cny: 20785, best: false },
+      },
+      "18 Pro Max": {
+        "256G": { price: "RM 6,999", cny: 11639, best: false },
+        "512G": { price: "RM 7,999", cny: 13302, best: false },
+        "1TB":  { price: "RM 9,999", cny: 16627, best: false },
+        "2TB":  { price: "RM 12,999", cny: 21616, best: false },
+      },
+    }
+  },
+  {
+    country: "🇬🇧 英国",
+    currency: "GBP",
+    models: {
+      "18 Pro": {
+        "256G": { price: "£1,099", cny: 10003, best: false },
+        "512G": { price: "£1,299", cny: 11823, best: false },
+        "1TB":  { price: "£1,699", cny: 15464, best: false },
+        "2TB":  { price: "£2,199", cny: 20015, best: false },
+      },
+      "18 Pro Max": {
+        "256G": { price: "£1,199", cny: 10913, best: false },
+        "512G": { price: "£1,399", cny: 12733, best: false },
+        "1TB":  { price: "£1,799", cny: 16374, best: false },
+        "2TB":  { price: "£2,299", cny: 20925, best: false },
+      },
+    }
+  },
+  {
+    country: "🇪🇺 德国",
+    currency: "EUR",
+    models: {
+      "18 Pro": {
+        "256G": { price: "€1,299", cny: 10154, best: false },
+        "512G": { price: "€1,549", cny: 12108, best: false },
+        "1TB":  { price: "€2,049", cny: 16016, best: false },
+        "2TB":  { price: "€2,649", cny: 20706, best: false },
+      },
+      "18 Pro Max": {
+        "256G": { price: "€1,449", cny: 11326, best: false },
+        "512G": { price: "€1,699", cny: 13280, best: false },
+        "1TB":  { price: "€2,199", cny: 17189, best: false },
+        "2TB":  { price: "€2,799", cny: 21879, best: false },
+      },
+    }
+  },
 ];
 
 // Recommended column order for the iPhone 18 Pro table UI
@@ -1098,8 +1318,67 @@ export const iphoneDuoPricingData = [
       },
     }
   },
+  {
+    country: "🇨🇳 中国澳门",
+    currency: "MOP",
+    models: {
+      "Duo": {
+        "256G":   { price: "MOP$17,899", cny: 14904, best: false },
+        "512G":   { price: "MOP$19,699", cny: 16403, best: false },
+        "1TB":    { price: "MOP$23,199", cny: 19317, best: false },
+        "2TB":    { price: "MOP$28,499", cny: 23730, best: false },
+      },
+    }
+  },
+  {
+    country: "🇦🇪 阿联酋",
+    currency: "AED",
+    models: {
+      "Duo": {
+        "256G":   { price: "AED 7,999", cny: 14649, best: false },
+        "512G":   { price: "AED 8,999", cny: 16480, best: false },
+        "1TB":    { price: "AED 10,499", cny: 19227, best: false },
+        "2TB":    { price: "AED 12,999", cny: 23805, best: false },
+      },
+    }
+  },
+  {
+    country: "🇲🇾 马来西亚",
+    currency: "MYR",
+    models: {
+      "Duo": {
+        "256G":   { price: "RM 9,999", cny: 16627, best: false },
+        "512G":   { price: "RM 11,499", cny: 19122, best: false },
+        "1TB":    { price: "RM 13,499", cny: 22447, best: false },
+        "2TB":    { price: "RM 16,499", cny: 27436, best: false },
+      },
+    }
+  },
+  {
+    country: "🇬🇧 英国",
+    currency: "GBP",
+    models: {
+      "Duo": {
+        "256G":   { price: "£1,799", cny: 16374, best: false },
+        "512G":   { price: "£2,099", cny: 19104, best: false },
+        "1TB":    { price: "£2,499", cny: 22745, best: false },
+        "2TB":    { price: "£3,099", cny: 28206, best: false },
+      },
+    }
+  },
+  {
+    country: "🇪🇺 德国",
+    currency: "EUR",
+    models: {
+      "Duo": {
+        "256G":   { price: "€2,199", cny: 17189, best: false },
+        "512G":   { price: "€2,499", cny: 19534, best: false },
+        "1TB":    { price: "€2,999", cny: 23442, best: false },
+        "2TB":    { price: "€3,699", cny: 28914, best: false },
+      },
+    }
+  },
 ];
-
 export const iphoneDuoColumns = [
   { key: 'country', label: 'Country/Region' },
   { key: 'currency', label: 'Currency' },

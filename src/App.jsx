@@ -49,7 +49,7 @@ function App() {
     const seoMetaMap = {
       iphone18: {
         title: 'iPhone 18 Pro / Max 全球价格地图 | 官方售价与国行比价 - Neutemu',
-        description: '实时对比 iPhone 18 Pro 与 iPhone 18 Pro Max 在中国大陆、中国香港、中国台湾、日本、美国等全球 11 个地区的官方售价与汇率折算，提供国行差价对比与最低价排行。',
+        description: '实时对比 iPhone 18 Pro 与 iPhone 18 Pro Max 在中国大陆、中国香港、中国澳门、中国台湾、日本、美国等全球 16 个地区的官方售价与汇率折算，提供国行差价对比与最低价排行。',
         ogTitle: 'iPhone 18 Pro / Max 全球官方售价与汇率比价地图 - Neutemu',
         canonicalUrl: 'https://icloud.neutemu.com/?product=iphone18',
       },
