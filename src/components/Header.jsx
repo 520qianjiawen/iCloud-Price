@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import ImageViewerModal from './ImageViewerModal';
 
 const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setTheme }) => {
   const [previewImage, setPreviewImage] = useState(null);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setPreviewImage(null);
-      }
-    };
-    if (previewImage) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [previewImage]);
 
   const activeMode = currentProduct ?? (showIphone17 ? 'iphone17' : 'icloud');
   const isIphone18 = activeMode === 'iphone18';
@@ -202,64 +187,13 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
           </div>
         )}
 
-        {/* Lightbox / Modal Image Viewer with Anti-Copy & Anti-Download Protection */}
-        {previewImage && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
-            onClick={() => setPreviewImage(null)}
-            onContextMenu={(e) => e.preventDefault()}
-          >
-            <div
-              className="relative flex flex-col max-h-[92vh] max-w-5xl w-full rounded-2xl border border-white/20 bg-slate-900/95 shadow-2xl backdrop-blur-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-              onContextMenu={(e) => e.preventDefault()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
-                <div className="flex items-center gap-2">
-                  <span className="inline-block h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
-                  <h3 className="text-sm font-bold text-white sm:text-base">{previewImage.title}</h3>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="hidden text-xs text-slate-400 sm:inline-block">仅供在线比对参考 · 禁止复制与保存</span>
-                  <button
-                    type="button"
-                    onClick={() => setPreviewImage(null)}
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-slate-300 transition hover:bg-white/20 hover:text-white"
-                    aria-label="关闭预览"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
-                      <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Modal Image Body with Multi-layer Anti-Copy Protection */}
-              <div
-                className="relative flex-1 overflow-auto p-2 sm:p-4 flex items-center justify-center select-none data-scrollbar"
-                onContextMenu={(e) => e.preventDefault()}
-              >
-                <div className="relative inline-block max-w-full">
-                  <img
-                    src={previewImage.src}
-                    alt={previewImage.title}
-                    draggable={false}
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                    className="protected-image max-h-[76vh] w-auto max-w-full rounded-xl object-contain shadow-lg"
-                  />
-                  {/* Transparent touch and click shield to block long press & right-click on the image */}
-                  <div
-                    className="protected-overlay absolute inset-0 z-10 cursor-default"
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Modern Interactive Lightbox Modal with Zoom, Pan and Return Controls */}
+        <ImageViewerModal
+          isOpen={Boolean(previewImage)}
+          src={previewImage?.src}
+          title={previewImage?.title}
+          onClose={() => setPreviewImage(null)}
+        />
       </div>
     </header>
   );
