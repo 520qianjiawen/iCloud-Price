@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 
 const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setTheme }) => {
+  const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setPreviewImage(null);
+      }
+    };
+    if (previewImage) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [previewImage]);
+
   const activeMode = currentProduct ?? (showIphone17 ? 'iphone17' : 'icloud');
   const isIphone18 = activeMode === 'iphone18';
   const isIphoneDuo = activeMode === 'iphoneduo';
@@ -17,19 +35,19 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
   if (isIphone18) {
     title = 'iPhone 18 Pro 全球价格地图';
     desc = '涵盖全球主要发售地区 Apple Store 官方售价，容量全版本覆盖与实时汇率换算。';
-    regionCount = '11';
+    regionCount = '16';
     tierCount = '2';
     tierLabel = '机型系列';
   } else if (isIphoneDuo) {
     title = 'iPhone Duo 全球价格地图';
     desc = '苹果首款横向书本折叠屏旗舰，多国家/地区官方售价比对与实时人民币折算。';
-    regionCount = '11';
+    regionCount = '16';
     tierCount = '4';
     tierLabel = '容量档位';
   } else if (isIphone17) {
     title = 'iPhone 17 全球价格地图';
     desc = '一览 iPhone 17 全系全球官方售价、容量版本与人民币实时折算比价。';
-    regionCount = '11';
+    regionCount = '16';
     tierCount = '4';
     tierLabel = '机型系列';
   }
@@ -106,15 +124,21 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
               </div>
             </div>
             <div>
-              <a
-                href={encodeURI(import.meta.env.BASE_URL + 'iPhone 18 Pro 各地区版本区别.webp')}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() =>
+                  setPreviewImage({
+                    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 18 Pro 各地区版本区别.webp'),
+                    title: 'iPhone 18 Pro 各地区版本与频段区别',
+                  })
+                }
                 className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-700 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-200 dark:hover:border-sky-400/30 dark:hover:bg-sky-400/10 dark:hover:text-white sm:text-sm"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 opacity-75">
+                  <path fillRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.22a.75.75 0 00-1.06 0l-1.91 1.91-4.72-4.72a.75.75 0 00-1.06 0L2.5 11.06zm12-4.81a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z" clipRule="evenodd" />
+                </svg>
                 <span>查看各地区详细版本与频段区别</span>
-                <span aria-hidden="true">↗</span>
-              </a>
+              </button>
             </div>
           </div>
         )}
@@ -143,15 +167,21 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
               </div>
             </div>
             <div>
-              <a
-                href={encodeURI(import.meta.env.BASE_URL + 'iPhone 17 Pro 各地区版本区别.jpg')}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() =>
+                  setPreviewImage({
+                    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 17 Pro 各地区版本区别.jpg'),
+                    title: 'iPhone 17 Pro 各地区版本与频段区别',
+                  })
+                }
                 className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-700 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-200 dark:hover:border-sky-400/30 dark:hover:bg-sky-400/10 dark:hover:text-white sm:text-sm"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 opacity-75">
+                  <path fillRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.22a.75.75 0 00-1.06 0l-1.91 1.91-4.72-4.72a.75.75 0 00-1.06 0L2.5 11.06zm12-4.81a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z" clipRule="evenodd" />
+                </svg>
                 <span>查看各地区详细版本与频段区别</span>
-                <span aria-hidden="true">↗</span>
-              </a>
+              </button>
             </div>
           </div>
         )}
@@ -169,6 +199,65 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
               Apple 官方价格支持文档
             </a>
             <span>· 全球基准汇率每日同步</span>
+          </div>
+        )}
+
+        {/* Lightbox / Modal Image Viewer with Anti-Copy & Anti-Download Protection */}
+        {previewImage && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
+            onClick={() => setPreviewImage(null)}
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            <div
+              className="relative flex flex-col max-h-[92vh] max-w-5xl w-full rounded-2xl border border-white/20 bg-slate-900/95 shadow-2xl backdrop-blur-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+                  <h3 className="text-sm font-bold text-white sm:text-base">{previewImage.title}</h3>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="hidden text-xs text-slate-400 sm:inline-block">仅供在线比对参考 · 禁止复制与保存</span>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewImage(null)}
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-slate-300 transition hover:bg-white/20 hover:text-white"
+                    aria-label="关闭预览"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+                      <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Image Body with Multi-layer Anti-Copy Protection */}
+              <div
+                className="relative flex-1 overflow-auto p-2 sm:p-4 flex items-center justify-center select-none data-scrollbar"
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                <div className="relative inline-block max-w-full">
+                  <img
+                    src={previewImage.src}
+                    alt={previewImage.title}
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    className="protected-image max-h-[76vh] w-auto max-w-full rounded-xl object-contain shadow-lg"
+                  />
+                  {/* Transparent touch and click shield to block long press & right-click on the image */}
+                  <div
+                    className="protected-overlay absolute inset-0 z-10 cursor-default"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
