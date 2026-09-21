@@ -1,6 +1,22 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
+const VERSION_DATA = {
+  iphone18: {
+    key: 'iphone18',
+    label: 'iPhone 18 Pro',
+    title: 'iPhone 18 Pro 各地区版本与频段区别',
+    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 18 Pro 各地区版本区别.webp'),
+  },
+  iphone17: {
+    key: 'iphone17',
+    label: 'iPhone 17 系列',
+    title: 'iPhone 17 Pro 各地区版本与频段区别',
+    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 17 Pro 各地区版本区别.webp'),
+  },
+};
+
+const ImageViewerModal = ({ isOpen, activeModel = 'iphone18', src, title, onClose }) => {
+  const [currentKey, setCurrentKey] = useState(activeModel || 'iphone18');
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -10,13 +26,28 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
   const dragStartRef = useRef({ x: 0, y: 0 });
   const posStartRef = useRef({ x: 0, y: 0 });
   const touchDistanceRef = useRef(null);
-  const touchStartPosRef = useRef({ x: 0, y: 0 });
 
-  // Reset transform when a new image is opened
+  // Sync currentKey when activeModel or isOpen changes
+  useEffect(() => {
+    if (activeModel && VERSION_DATA[activeModel]) {
+      setCurrentKey(activeModel);
+    }
+  }, [activeModel, isOpen]);
+
+  const activeItem = VERSION_DATA[currentKey] || {
+    src: src || VERSION_DATA.iphone18.src,
+    title: title || VERSION_DATA.iphone18.title,
+  };
+
+  const resetZoom = useCallback(() => {
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  }, []);
+
+  // Reset transform when a new image or version is opened
   useEffect(() => {
     if (isOpen) {
-      setScale(1);
-      setPosition({ x: 0, y: 0 });
+      resetZoom();
       setHasInteracted(false);
       document.body.style.overflow = 'hidden';
     } else {
@@ -25,9 +56,9 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, src]);
+  }, [isOpen, currentKey, resetZoom]);
 
-  // Handle ESC key to close
+  // Handle ESC key to close & shortcut keys
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!isOpen) return;
@@ -43,7 +74,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, resetZoom]);
 
   const zoomIn = useCallback(() => {
     setScale((prev) => Math.min(prev + 0.35, 4));
@@ -57,11 +88,6 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
       return next;
     });
     setHasInteracted(true);
-  }, []);
-
-  const resetZoom = useCallback(() => {
-    setScale(1);
-    setPosition({ x: 0, y: 0 });
   }, []);
 
   const toggleZoom = useCallback(() => {
@@ -87,7 +113,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
 
   // Mouse drag handlers
   const handleMouseDown = (e) => {
-    if (e.button !== 0) return; // only left click
+    if (e.button !== 0) return;
     setIsDragging(true);
     setHasInteracted(true);
     dragStartRef.current = { x: e.clientX, y: e.clientY };
@@ -149,7 +175,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
     touchDistanceRef.current = null;
   };
 
-  if (!isOpen || !src) return null;
+  if (!isOpen) return null;
 
   return (
     <div
@@ -158,19 +184,50 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
       onDragStart={(e) => e.preventDefault()}
     >
       {/* Top Navbar Header */}
-      <header className="relative z-30 flex items-center justify-between border-b border-white/10 bg-slate-900/80 px-4 py-3 backdrop-blur-md sm:px-6">
-        {/* Title Info */}
-        <div className="flex items-center gap-2.5 min-w-0">
-          <span className="relative flex h-2.5 w-2.5 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-500" />
-          </span>
-          <h3 className="truncate text-sm font-bold text-white sm:text-base">
-            {title || '各地区版本与频段区别'}
-          </h3>
-          <span className="hidden rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-slate-300 md:inline-block">
-            双击 / 滚轮 / 双指自由缩放
-          </span>
+      <header className="relative z-30 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-slate-900/85 px-4 py-3 backdrop-blur-md sm:px-6">
+        {/* Title & Version Switcher */}
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-500" />
+            </span>
+            <h3 className="truncate text-sm font-bold text-white sm:text-base">
+              {activeItem.title}
+            </h3>
+          </div>
+
+          {/* Model Switcher Segmented Tabs: 18 Pro / 17 系列 */}
+          <div className="flex items-center rounded-xl bg-white/10 p-0.5 border border-white/15 shadow-inner">
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentKey('iphone18');
+                resetZoom();
+              }}
+              className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+                currentKey === 'iphone18'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              iPhone 18 Pro
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentKey('iphone17');
+                resetZoom();
+              }}
+              className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+                currentKey === 'iphone17'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              iPhone 17 系列
+            </button>
+          </div>
         </div>
 
         {/* Top Right Action: Prominent Return/Close Button */}
@@ -213,7 +270,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-sky-400">
               <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
             </svg>
-            <span>提示：支持滚轮/双指手势缩放，按住可任意拖动查看细节</span>
+            <span>提示：顶部可一键切换 18 Pro / 17 系列；支持双指/滚轮自由缩放与拖拽</span>
           </div>
         )}
 
@@ -228,8 +285,8 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
           {/* Card Frame around the table */}
           <div className="relative rounded-2xl bg-white p-2 sm:p-4 shadow-2xl ring-1 ring-white/20 select-none">
             <img
-              src={src}
-              alt={title}
+              src={activeItem.src}
+              alt={activeItem.title}
               draggable={false}
               className="protected-image max-h-[78vh] w-auto max-w-[90vw] object-contain rounded-lg"
               style={{
@@ -289,7 +346,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
             title="放大 (+)"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
-              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+              <path d="M10.75 4.75a.75.75 0 00-1.06 1.06v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
             </svg>
           </button>
 
@@ -305,7 +362,7 @@ const ImageViewerModal = ({ isOpen, src, title, onClose }) => {
             还原
           </button>
 
-          {/* Return / Close Button in Bottom Toolbar for Mobile convenience */}
+          {/* Return / Close Button in Bottom Toolbar */}
           <button
             type="button"
             onClick={onClose}

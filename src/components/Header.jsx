@@ -113,6 +113,7 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
                 type="button"
                 onClick={() =>
                   setPreviewImage({
+                    model: 'iphone18',
                     src: encodeURI(import.meta.env.BASE_URL + 'iPhone 18 Pro 各地区版本区别.webp'),
                     title: 'iPhone 18 Pro 各地区版本与频段区别',
                   })
@@ -156,7 +157,8 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
                 type="button"
                 onClick={() =>
                   setPreviewImage({
-                    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 17 Pro 各地区版本区别.jpg'),
+                    model: 'iphone17',
+                    src: encodeURI(import.meta.env.BASE_URL + 'iPhone 17 Pro 各地区版本区别.webp'),
                     title: 'iPhone 17 Pro 各地区版本与频段区别',
                   })
                 }
@@ -190,6 +192,7 @@ const Header = ({ currentProduct = 'icloud', showIphone17 = false, theme, setThe
         {/* Modern Interactive Lightbox Modal with Zoom, Pan and Return Controls */}
         <ImageViewerModal
           isOpen={Boolean(previewImage)}
+          activeModel={previewImage?.model || (isIphone17 ? 'iphone17' : 'iphone18')}
           src={previewImage?.src}
           title={previewImage?.title}
           onClose={() => setPreviewImage(null)}
